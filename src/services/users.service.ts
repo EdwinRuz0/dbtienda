@@ -20,6 +20,13 @@ export class UsersService {
         }
         return userDoc;
     }
+    async getUserDataUserName(username: string): Promise<Usuarios>{
+      const userDoc = await this.usersRepository.findOne({ where: { UserName: username } });
+      if (!userDoc) {
+          throw new ConflictException('Usuario no encontrado');
+      }
+      return userDoc;
+  }
     async deleteUserId(UserID: number): Promise<void> {
         const user = await this.usersRepository.findOneBy({UsuarioID: UserID});
         if (!user) {
@@ -68,5 +75,10 @@ export class UsersService {
       }
       await this.usersRepository.save(user);
       return user;
+    }
+    async verifyPassword(UserName: string, Password: string): Promise<boolean> {
+      const user = await this.getUserDataUserName(UserName);
+      const passwordMatch = await bcrypt.compare(Password, user.Password);
+      return passwordMatch;
     }
 }
