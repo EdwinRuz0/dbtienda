@@ -20,8 +20,8 @@ export class UsersService {
         }
         return userDoc;
     }
-    async getUserDataUserName(username: string): Promise<Usuarios>{
-      const userDoc = await this.usersRepository.findOne({ where: { UserName: username } });
+    async getUserDataUserName(UserName: string): Promise<Usuarios>{
+      const userDoc = await this.usersRepository.findOne({ where: { UserName: UserName } });
       if (!userDoc) {
           throw new ConflictException('Usuario no encontrado');
       }
