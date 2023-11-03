@@ -1,7 +1,6 @@
 //categories.service.ts
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Usuarios } from 'src/models/users.model';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Categorias } from 'src/models/categories.model';
