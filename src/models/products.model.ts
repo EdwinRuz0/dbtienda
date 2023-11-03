@@ -15,10 +15,10 @@ export class Productos{
     Precio: number;
     @Column()
     CantidadEnStock: number;
-    @ManyToOne(() => Categorias, (categoria) => categoria.id)
+    // @ManyToOne(() => Categorias, (categoria) => categoria.id)
     @Column()
     CategoriaID: number;
-    @ManyToOne(() => Proveedores, (proveedor) => proveedor.ProveedorID)
+    // @ManyToOne(() => Proveedores, (proveedor) => proveedor.ProveedorID)
     @Column()
     ProveedorID: number;
 

@@ -1,6 +1,5 @@
 //suppliers.controller.ts
 import { Controller, Get, Param, Delete, Post, Body, Put } from '@nestjs/common';
-import { Categorias } from 'src/models/categories.model';
 import { Proveedores } from 'src/models/suppliers.model';
 import { SuppliersService } from 'src/services/suppliers.service';
 @Controller()

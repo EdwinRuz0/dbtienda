@@ -1,5 +1,6 @@
 //suppliers.model.ts
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Productos } from "./products.model";
 
 @Entity()
 export class Proveedores{
@@ -11,4 +12,6 @@ export class Proveedores{
     ContactoProveedor: string;
     @Column()
     DireccionProveedor: string
+    // @OneToMany(() => Productos, (producto) => producto.ProveedorID)
+    // productos: Productos[];
 }

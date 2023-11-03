@@ -12,13 +12,16 @@ import { CategoriesService } from 'src/services/categories.service';
 import { SuppliersController } from 'src/controllers/suppliers.controller';
 import { SuppliersService } from 'src/services/suppliers.service';
 import { Proveedores } from './suppliers.model';
+import { Productos } from './products.model';
+import { ProductsController } from 'src/controllers/products.controller';
+import { ProductsService } from 'src/services/products.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService],
 })
 export class AppModule {}
