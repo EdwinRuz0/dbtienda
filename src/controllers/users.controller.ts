@@ -3,6 +3,7 @@ import { Controller, Get, Param, Delete, Post, Body, Put, ConflictException } fr
 import { Usuarios } from 'src/models/users.model';
 import { UsersService } from 'src/services/users.service';
 import * as jwt from 'jsonwebtoken';
+import { async } from 'rxjs';
 @Controller()
 export class UsersController {
 constructor(private readonly usersService: UsersService) {}

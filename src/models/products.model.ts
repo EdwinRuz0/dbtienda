@@ -1,7 +1,5 @@
 //products.model.ts
 import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { Proveedores } from "./suppliers.model";
-import { Categorias } from "./categories.model";
 
 @Entity()
 export class Productos{
@@ -15,10 +13,8 @@ export class Productos{
     Precio: number;
     @Column()
     CantidadEnStock: number;
-    // @ManyToOne(() => Categorias, (categoria) => categoria.id)
     @Column()
     CategoriaID: number;
-    // @ManyToOne(() => Proveedores, (proveedor) => proveedor.ProveedorID)
     @Column()
     ProveedorID: number;
 

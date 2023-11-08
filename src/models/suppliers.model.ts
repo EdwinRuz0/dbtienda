@@ -12,6 +12,4 @@ export class Proveedores{
     ContactoProveedor: string;
     @Column()
     DireccionProveedor: string
-    // @OneToMany(() => Productos, (producto) => producto.ProveedorID)
-    // productos: Productos[];
 }

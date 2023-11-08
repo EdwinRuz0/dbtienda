@@ -15,13 +15,22 @@ import { Proveedores } from './suppliers.model';
 import { Productos } from './products.model';
 import { ProductsController } from 'src/controllers/products.controller';
 import { ProductsService } from 'src/services/products.service';
+import { Clientes } from './customers.model';
+import { CustomersController } from 'src/controllers/customers.controller';
+import { CustomersService } from 'src/services/customers.service';
+import { SalesController } from 'src/controllers/sales.controller';
+import { SalesService } from 'src/services/sales.service';
+import { Ventas } from './sales.model';
+import { DetallesVenta } from './salesDetails.model';
+import { DetailsSalesController } from 'src/controllers/salesDetails.controller';
+import { DetailsSalesService } from 'src/services/salesDetails.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService],
 })
 export class AppModule {}

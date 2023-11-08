@@ -5,7 +5,7 @@ import { ProductsService } from 'src/services/products.service';
 @Controller()
 export class ProductsController {
 constructor(private readonly productsService: ProductsService) {}
-@Get('/api/producto')
+  @Get('/api/producto')
   async getAllProducts() { //obtener todos los datos de todos los productos
     const products = await this.productsService.getAllProducts();
     return products;
