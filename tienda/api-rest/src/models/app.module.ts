@@ -24,13 +24,25 @@ import { Ventas } from './sales.model';
 import { DetallesVenta } from './salesDetails.model';
 import { DetailsSalesController } from 'src/controllers/salesDetails.controller';
 import { DetailsSalesService } from 'src/services/salesDetails.service';
+import { Empleados } from './employees.model';
+import { EmployeesController } from 'src/controllers/employees.controller';
+import { EmployeesService } from 'src/services/employees.service';
+import { Compras } from './purchases.model';
+import { PurchasesController } from 'src/controllers/purchases.controller';
+import { PurchasesService } from 'src/services/purchases.service';
+import { DetallesCompra } from './purchasesDetails.model';
+import { PurchasesDetailsController } from 'src/controllers/purchasesDetails.controller';
+import { PurchasesDetailsService } from 'src/services/purchasesDetails.service';
+import { Transacciones } from './transactions.model';
+import { TransactionsController } from 'src/controllers/transactions.controller';
+import { TransactionsService } from 'src/services/transactions.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService],
 })
 export class AppModule {}
