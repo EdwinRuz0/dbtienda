@@ -1,66 +1,18 @@
-<body>
-    <div *ngIf="Alert" class="alert alert-danger d-flex align-items-center justify-content-center alert-dismissible"
-        id="alert" role="alert">
-        <i class="bi bi-exclamation-circle fs-3 mx-2"></i>
-        <div>
-            {{errorMessage}}
-        </div>
-        <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form>
+          <div class="mb-3">
+            <label for="username" class="form-label">Usuario</label>
+            <input type="text" class="form-control" id="username" [(ngModel)]="username" name="username" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        </form>
+      </div>
     </div>
-    <div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="container w-75 bg-white rounded shadow">
-            <div class="row">
-                <div class=" col col-md-5 col-lg-6 col-xl-6 d-none d-sm-block rounded">
-                    <div class="align-items-center">
-                        <img src="../../../assets/Imagen-Login.png" alt="login form" id="imgLogin" class="img-fluid"
-                            style="border-radius: 1rem 0 0 1rem;" />
-                    </div>
-                </div>
-                <div class="col bg-white rounded ">
-                <div>
-                    <!-- "efdjhdsnkj" -->
-                </div>
-                    <!-- <div class="d-flex align-items-center justify-content-center mb-2 pb-1 mt-4 border border-white">
-                        <img class="logotext" src="../../../assets/AD1500.png" alt=".">
-                        <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
-                        <p id="logo" class="p fw-bold mb-0">D-Agnostic</p>
-                    </div> -->
-                    <p class=" text-center fw-bold " >
-                        ¡Por favor, introduce tu usuario y contraseña!
-                    </p>
-                    <form [formGroup]="forma" (ngSubmit)="crear()">
-                        <div class="form-outline mb-3 mx-1 mx-lg-4 mx-xl-5">
-                            <label class="form-label fw-bold" for="input1">Nombre de Usuario</label>
-                            <div class="form-group input-field">
-                                <i class="bi bi-person bi-2x mx-1"></i>
-                                <input type="text" class="form-control py-1" id="input1" formControlName="UserName"
-                                placeholder="Ingrese su Nombre de Usuario" />
-                            </div>
-                        </div>
-                        <div class="form-outline mb-3 mx-1 mx-lg-4 mx-xl-5">
-                            <div class="form-group text-left">
-                                <label for="input2" class="form-label fw-bold">Contraseña</label>
-                                <div class="input-field">
-                                    <i class="bi bi-lock bi-2x mx-1"></i>
-                                    <input [type]="mostrarPassword ? 'text' : 'Password'" id="input2"
-                                        formControlName="Password" placeholder="Ingrese su contraseña"
-                                        class="form-control py-1" />
-                                    <button type="button" class="" (click)="mostrarContra()">
-                                        <i class="bi bi-eye{{ mostrarPassword ? '-slash' : '' }} "></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="text-center justify-content-between mt-3 mb-4">
-                            <button class="button-entrar btn btn-custom btn-dark btn-lg btn-block" type="button"
-                                (click)="entrar()">Iniciar Sesión</button>
-                        </div>
-                        <p class="mb-3 pb-lg-2 mx-5 " style="color: #000000;">¿No tienes una cuenta? <a href="/register"
-                            style="color: #0015ff;">Registrar aquí</a></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
+  </div>
+  
