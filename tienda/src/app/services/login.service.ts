@@ -11,7 +11,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   enviarDatosBackend(datos: any): Observable<any>{
-
     return this.http.post(this.BackendURL, datos);
   }
 }
