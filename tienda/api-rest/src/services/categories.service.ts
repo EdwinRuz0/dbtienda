@@ -37,7 +37,8 @@ export class CategoriesService {
       newCategory.id =  newCategoryId;
       const category = this.categoriesRepository.create({
         id: newCategory.id,
-        NombreCategoria: newCategory.NombreCategoria
+        NombreCategoria: newCategory.NombreCategoria,
+        Descripcion: newCategory.Descripcion,
       });
       await this.categoriesRepository.save(category);
       return category;
@@ -49,6 +50,9 @@ export class CategoriesService {
       }
       if (updatedCategory.NombreCategoria) {
         categories.NombreCategoria = updatedCategory.NombreCategoria;
+      }
+      if (updatedCategory.Descripcion) {
+        categories.Descripcion = updatedCategory.Descripcion;
       }
       await this.categoriesRepository.save(categories);
       return categories;

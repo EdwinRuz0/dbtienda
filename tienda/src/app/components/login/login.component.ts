@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       this.loginService.enviarDatosBackend(datos).subscribe(
         (response) => {
           console.log('Login exitoso', response);
-          this.router.navigate(['']);
+          this.router.navigate(['home']);
         },
         (error) => {
           if (error.status === 409) {

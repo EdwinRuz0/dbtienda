@@ -1,10 +1,8 @@
 //model.ts
-export interface Question {
-    type: string;
-    category: string;
-    questionText: string;
-    options: string[]; // Opciones de la pregunta (solo para preguntas de opción múltiple)
-    answer: string; // Respuesta de la pregunta (por ejemplo, la opción correcta)
+export interface Categoria {
+    id: number;
+    NombreCategoria: string;
+    Descripcion: string;
 }
 export interface preguntas{
     questionText: string;
@@ -54,10 +52,4 @@ export interface PerfilImagen{
     name:string;
     extension:string;
     data:string;
-}
-export interface Survey{
-    name: string;
-    description: string;
-    privacy: string;
-    questions: Question[];
 }
