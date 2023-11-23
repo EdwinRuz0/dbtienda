@@ -1,0 +1,43 @@
+<!-- products.component.html -->
+<body>
+    <header>
+        <nav>
+          <div class="logo">Abarrotes La Bendición de Dios</div>
+          <ul>
+            <li><a (click)="irAInicio()">Inicio</a></li>
+            <li><a href="#">Contacto</a></li>
+            <li><a href="#">Carrito</a></li>
+            <li><a href="#">Perfil</a></li>
+          </ul>
+        </nav>
+      </header>
+      
+      <main>
+        <div class="container ">
+            <div class="row">
+            <section class="featured-products">
+                <h2 class="text-center mb-4">Proveedores Disponibles</h2>
+                <div class="row justify-content-center">
+                  <div class=" col col-md-3" *ngFor="let proveedor of proveedores; let i = index">
+                    <div class="card shadow mb-4 ml-3">
+                      <img src="../../../assets/Imagen-{{proveedor.ProveedorID}}.jpeg" class="card-img-top" alt="{{proveedor.NombreProveedor}}">
+                      <div class="card-body">
+                        <h5 class="card-title">{{proveedor.NombreProveedor}}</h5>
+                        <p class="card-text">Contacto: {{proveedor.ContactoProveedor}}</p>
+                        <p class="card-text">Direccion: {{proveedor.DireccionProveedor}}</p>
+                        <button class="btn btn-primary" (click)="explorarProveedor(proveedor.ProveedorID)">Explorar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              </div>
+        </div>
+        
+      </main>
+      
+      <footer>
+        <p class="text-center">&copy; 2023 Abarrotes La Bendición de Dios</p>
+      </footer>
+    </body>
+    

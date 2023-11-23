@@ -72,4 +72,19 @@ export class ProductsService {
       await this.productosRepository.save(products);
       return products;
     }
+
+    async getProductsByCategory(categoriaId: number): Promise<Productos[]> {
+      const products = await this.productosRepository.find({where: { CategoriaID: categoriaId },});
+      if (!products) {
+        throw new ConflictException('No se encontraron productos para la categoría especificada');
+      }
+      return products;
+    }
+    async getProductsByProveedor(proveedorId: number): Promise<Productos[]> {
+      const products = await this.productosRepository.find({where: { ProveedorID: proveedorId },});
+      if (!products) {
+        throw new ConflictException('No se encontraron productos para el proveedor especificado');
+      }
+      return products;
+    }
 }

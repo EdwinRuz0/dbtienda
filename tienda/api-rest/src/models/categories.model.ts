@@ -1,3 +1,4 @@
+//categories.model.ts
 import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()

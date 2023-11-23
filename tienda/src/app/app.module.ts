@@ -7,12 +7,20 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { ProductosComponent } from './components/productos/productos.component';
+import { ProductosALLComponent } from './components/productos-all/productos-all.component';
+import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
+import { ProveedorComponent } from './components/proveedor/proveedor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    ProductosComponent,
+    ProductosALLComponent,
+    ProductosProvComponent,
+    ProveedorComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +29,7 @@ import { HomeComponent } from './components/home/home.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      // {path: '', component:LoginComponent},
+      // {path: 'home', component:HomeComponent},
     ])
   ],
   providers: [],

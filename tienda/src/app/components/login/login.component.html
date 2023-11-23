@@ -9,11 +9,11 @@
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       
       <form [formGroup]="forma" (ngSubmit)="onSubmit()">
-        <label for="UserName"><b>UserName</b></label>
-        <input type="text" placeholder="Enter UserName" name="UserName" formControlName="UserName" required>
+        <label for="UserName"><b>Usuario</b></label>
+        <input type="text" placeholder="Escriba el usuario" name="UserName" formControlName="UserName" required>
   
-        <label for="Password"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="Password" formControlName="Password" required>
+        <label for="Password"><b>Contraseña</b></label>
+        <input type="password" placeholder="Escriba su contraseña" name="Password" formControlName="Password" required>
   
         <button type="submit">Login</button>
       </form>

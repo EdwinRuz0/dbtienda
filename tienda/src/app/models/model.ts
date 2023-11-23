@@ -4,15 +4,14 @@ export interface Categoria {
     NombreCategoria: string;
     Descripcion: string;
 }
-export interface preguntas{
-    questionText: string;
-    type: string;
-    category: string,
-    option?: string,
-    answer: string,
-    opcion1?:string,
-    opcion2?:string,
-    opcion3?:string,
+export interface Productos{
+    ProductoID: number;
+    NombreProducto: string;
+    Descripcion: string;
+    Precio: number;
+    CantidadEnStock: number;
+    CategoriaID: number;
+    ProveedorID: number;
 }
 export interface Usuario{
     username: string;
@@ -22,9 +21,11 @@ export interface Usuario{
     institution: string;
     email: string;
 }
-export interface CategoriaI{
-    title: string;
-    description: string;
+export interface Proveedores{
+    ProveedorID: number;
+    NombreProveedor: string;
+    ContactoProveedor: string;
+    DireccionProveedor: string;
 }
 export class Encuesta {
     id!: number;

@@ -30,4 +30,14 @@ constructor(private readonly productsService: ProductsService) {}
     const updatedProduct = await this.productsService.updateProductData(id, updatedProductData);
     return { message: 'Datos Actualizados con éxito' };;
   }
+  @Get('/api/producto/categoria/:categoriaId') // obtener productos por categoría
+  async getProductsByCategory(@Param('categoriaId') categoriaId: number) {
+    const products = await this.productsService.getProductsByCategory(categoriaId);
+    return products;
+  }
+  @Get('/api/producto/proveedor/:proveedorId') // obtener productos por categoría
+  async getProductsByProveedor(@Param('proveedorId') proveedorId: number) {
+    const products = await this.productsService.getProductsByProveedor(proveedorId);
+    return products;
+  }
 }

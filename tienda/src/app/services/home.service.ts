@@ -7,7 +7,7 @@ import { Categoria } from '../models/model';
   providedIn: 'root'
 })
 export class HomeService {
-  private apiUrl = '/api/categoria'; // Ajusta la URL según la configuración de tu backend
+  private apiUrl = '/api/categoria';
 
   constructor(private http: HttpClient) {}
 

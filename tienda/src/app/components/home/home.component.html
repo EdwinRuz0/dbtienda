@@ -4,7 +4,8 @@
     <nav>
       <div class="logo">Abarrotes La Bendición de Dios</div>
       <ul>
-        <li><a href="#">Inicio</a></li>
+        <li><a (click)="irTodosLosProductos()">Todos Los Productos</a></li>
+        <li><a (click)="irTodosLosProductosProveedores()">Productos por proveedores</a></li>
         <li><a href="#">Contacto</a></li>
         <li><a href="#">Carrito</a></li>
         <li><a href="#">Perfil</a></li>
@@ -13,21 +14,25 @@
   </header>
   
   <main>
-    <section class="featured-products">
-      <h2 class="text-center mb-4">Categorías Disponibles</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-3" *ngFor="let categoria of categorias; let i = index">
-          <div class="card mb-4">
-            <img src="../../../assets/Imagen-{{categoria.id}}.jpeg" class="card-img-top" alt="{{categoria.NombreCategoria}}">
-            <div class="card-body">
-              <h5 class="card-title">{{categoria.NombreCategoria}}</h5>
-              <p class="card-text">{{categoria.Descripcion}}</p>
-              <a href="#" class="btn btn-primary">Explorar</a>
+    <div class="container ">
+        <div class="row">
+        <section class="featured-products">
+            <h2 class="text-center mb-4">Categorías Disponibles</h2>
+            <div class="row justify-content-center">
+              <div class=" col col-md-3" *ngFor="let categoria of categorias; let i = index">
+                <div class="card shadow mb-4 ml-3">
+                  <img src="../../../assets/Imagen-{{categoria.id}}.jpeg" class="card-img-top" alt="{{categoria.NombreCategoria}}">
+                  <div class="card-body">
+                    <h5 class="card-title">{{categoria.NombreCategoria}}</h5>
+                    <p class="card-text">{{categoria.Descripcion}}</p>
+                    <button class="btn btn-primary" (click)="explorarCategoria(categoria.id)">Explorar</button>
+                  </div>
+                </div>
+              </div>
             </div>
+          </section>
           </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
   
   <footer>

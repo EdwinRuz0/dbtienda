@@ -36,6 +36,10 @@ export class LoginComponent implements OnInit {
       this.loginService.enviarDatosBackend(datos).subscribe(
         (response) => {
           console.log('Login exitoso', response);
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('userRole', response.role);
+          localStorage.setItem('userId', response.id.toString());
+          localStorage.setItem('userName', response.name);
           this.router.navigate(['home']);
         },
         (error) => {
