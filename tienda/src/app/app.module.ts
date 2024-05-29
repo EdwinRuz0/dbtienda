@@ -11,6 +11,8 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { AyudaComponent } from './components/ayuda/ayuda.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ProveedorComponent } from './components/proveedor/proveedor.component';
     ProductosComponent,
     ProductosALLComponent,
     ProductosProvComponent,
-    ProveedorComponent
+    ProveedorComponent,
+    AyudaComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

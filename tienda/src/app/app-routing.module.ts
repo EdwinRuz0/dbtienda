@@ -6,6 +6,8 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
+import { AyudaComponent } from './components/ayuda/ayuda.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -14,6 +16,9 @@ const routes: Routes = [
   { path: 'productsAll', component: ProductosALLComponent },
   { path: 'proveedores', component: ProveedorComponent },
   { path: 'productsProv', component: ProductosProvComponent },
+  { path: 'ayuda', component: AyudaComponent },
+  { path: 'perfil', component: PerfilComponent},
+
 ];
 
 @NgModule({
