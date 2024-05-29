@@ -36,13 +36,16 @@ import { PurchasesDetailsService } from 'src/services/purchasesDetails.service';
 import { Transacciones } from './transactions.model';
 import { TransactionsController } from 'src/controllers/transactions.controller';
 import { TransactionsService } from 'src/services/transactions.service';
+import { Auditoria } from './auditory.model';
+import { AuditoryController } from 'src/controllers/auditory.controller';
+import { AuditoryService } from 'src/services/auditory.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones, Auditoria])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController, AuditoryController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService, AuditoryService],
 })
 export class AppModule {}
