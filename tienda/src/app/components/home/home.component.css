@@ -95,7 +95,9 @@ body {
   } */
 
   .card-body {
-    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Establece el diseño en columna para los elementos hijos */
+    height: 100%; /* Ajusta la altura para que la tarjeta crezca según sea necesario */
   }
   
   .card-title {
@@ -105,10 +107,11 @@ body {
   
   .card-text {
     color: #555;
-    height: 50px;
+    flex-grow: 1; /* Hace que el texto ocupe todo el espacio disponible */
   }
   
   .btn-primary {
+    margin-top: auto; /* El margen superior se ajustará automáticamente para que el botón se alinee al final */
     background-color: #3498db;
     color: #fff;
     border: none;
@@ -121,6 +124,7 @@ body {
   .btn-primary:hover {
     background-color: #2980b9;
   }
+  
   
   footer {
     background-color: #f8f9fa;
