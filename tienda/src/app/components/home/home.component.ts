@@ -25,24 +25,4 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  explorarCategoria(id: number) {
-    console.log(`Explorar categoría con ID: ${id}`);
-    localStorage.setItem('id',id.toString())
-    this.productosService.getProductos(this.id).subscribe(
-      (productos) => {
-        console.log('Productos de la categoría:', productos);
-        this.router.navigate(['products']);
-      },
-      (error) => {
-        console.error('Error al obtener productos', error);
-      }
-    );
-  }
-  irTodosLosProductos() {
-    this.router.navigate(['productsAll']);
-  }
-
-  irTodosLosProductosProveedores() {
-    this.router.navigate(['proveedores']);
-  }
 }

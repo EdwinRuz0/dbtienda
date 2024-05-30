@@ -7,19 +7,7 @@ body {
     background-color: #e7f7ff;
   }
   
-  header {
-    background-color: #3498db;
-    color: #fff;
-    padding: 15px 0;
-  }
-  
-  nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+
   
   .logo {
     font-size: 24px;

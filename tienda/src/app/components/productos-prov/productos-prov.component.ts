@@ -16,15 +16,7 @@ export class ProductosProvComponent {
 
 
   ngOnInit(): void {
-    this.productosService.getProductosProv(this.proveedorId).subscribe(
-      (productos) => {
-        this.productos = productos;
-        console.log(productos);
-      },
-      (error) => {
-        console.error('Error al obtener productos', error);
-      }
-    );
+
   }
   irAInicio(): void {
     this.router.navigate(['home']);

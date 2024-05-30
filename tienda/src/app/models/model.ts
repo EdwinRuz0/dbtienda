@@ -54,3 +54,7 @@ export interface PerfilImagen{
     extension:string;
     data:string;
 }
+export interface Imagen {
+    ImageName: string;
+    ImageData: string;
+}

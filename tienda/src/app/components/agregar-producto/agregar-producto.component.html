@@ -1,0 +1,169 @@
+<body>
+    <div *ngIf="alertMalo" class="alert alert-danger d-flex align-items-center justify-content-center alert-dismissible"
+        role="alert">
+        <i class="bi bi-exclamation-circle fs-5 mx-2"></i>
+        <div>
+            {{errorMessage}}
+        </div>
+    </div>
+    <div *ngIf="alertBueno"
+        class="alert alert-success d-flex align-items-center justify-content-center alert-dismissible" role="alert">
+        <i class="bi bi-check-circle fs-5 mx-2"></i>
+        <div>
+            {{mensajeBueno}}
+        </div>
+    </div>
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <div class="card shadow">
+                    <form [formGroup]="form">
+                        <h1 class="text-center mt-2">Agregar Bitacora</h1>
+                        <div class="row mt-3">
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input1">Nombre del Cultivo</label>
+                                    <div class="input-field">
+                                        <select class="form-select form-control" id="input1" formControlName="cultivo"
+                                            aria-label="Institución" (change)="onSelectCultivo($event)">
+                                            <option *ngFor="let cultivo of cultivo" [value]="cultivo.CropsSeed">
+                                                {{cultivo.CropsSeed}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input2">Nombre del Cientifico</label>
+                                    <input id="input2" type="text" class="form-control"
+                                        formControlName="nombreCientifico" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0 mx-auto">
+                                <div class="form-group">
+                                    <label for="input3" class="form-label">Etapas Fenologicas</label>
+                                    <textarea id="input3" class="form-control" style="resize: none"
+                                        formControlName="etapasFenologicas" readonly ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input4">Cantidad Sembrada</label>
+                                    <input id="input4" type="number" class="form-control"
+                                        formControlName="CantidadSembrada">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input5">Tipo de suelo</label>
+                                    <div class="input-field">
+                                        <select class="form-select form-control" id="input5" formControlName="TipoDeSuelo"
+                                            aria-label="TipoDeSuelo" (change)="onSelectSuelo($event)">
+                                            <option *ngFor="let suelo of this.suelos" [value]="suelo.SurfaceType">
+                                                {{suelo.SurfaceType}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input6">PH del suelo</label>
+                                    <input id="input6" type="text" class="form-control"
+                                        formControlName="PhSuelo" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input7">Tipo de riego</label>
+                                    <div class="input-field">
+                                        <select class="form-select form-control" id="input7" formControlName="TipoDeRiego"
+                                            aria-label="TipoDeRiego" (change)="onSelectRiego($event)">
+                                            <option *ngFor="let riego of this.riegos" [value]="riego.irrigationName">
+                                                {{riego.irrigationName}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input8">PH del agua</label>
+                                    <input id="input8" type="text" class="form-control"
+                                        formControlName="PhRiego" readonly>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input9">Cantidad de fertilizante aplicado</label>
+                                    <input id="input9" type="text" class="form-control"
+                                        formControlName="FertilizanteAplicado">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input10">Nombre del fertilizante</label>
+                                    <input id="input10" type="text" class="form-control"
+                                        formControlName="NombreFertilizante">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input11">Cantidad de nutrientes necesarios</label>
+                                    <input id="input11" type="text" class="form-control"
+                                        formControlName="NutirenteNecesario">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input12">Nombre de los nutrientes necesarios</label>
+                                    <input id="input12" type="text" class="form-control"
+                                        formControlName="NombreNutriente">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input13">Cantidad de cosecha esperada</label>
+                                    <input id="input13" type="text" class="form-control"
+                                        formControlName="CosechaEsperada">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input14">Cantidad de cosecha obtenida</label>
+                                    <input id="input14" type="text" class="form-control"
+                                        formControlName="CosechaObtenida">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input15">Fecha de siembra</label>
+                                    <input id="input15" type="date" class="form-control"
+                                        formControlName="FechaSiembra">
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div class="form-group">
+                                    <label for="input16">Fecha de cosecha</label>
+                                    <input id="input16" type="date" class="form-control"
+                                        formControlName="FechaCosecha">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
+                                <div
+                                    class="gap-2 d-flex align-items-center justify-content-center mb-3 button-container">
+                                    <button class="btn btn-success btn-lg" (click)="GuardarCultivo()">
+                                        <i class="bi bi-floppy2"></i> Guardar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -1,30 +1,46 @@
 //productos.service.ts
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Categoria, Productos, Proveedores } from '../models/model';
+import { Injectable, Output, EventEmitter } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { Usuario, Productos } from 'src/app/models/model';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductosService {
-  private apiUrl = '/api/producto/categoria/';
+  private apiUrl = '/api/producto';
   private apiUrl2 = '/api/producto';
   private apiUrl3 = '/api/proveedor';
   private apiUrl4 = '/api/producto/proveedor/';
-  constructor(private http: HttpClient, ) {
+
+  private _refresh$ = new Subject<void>();
+  constructor(private http: HttpClient) { }
+
+  get refresh$() {
+    return this._refresh$;
   }
 
-  getProductos(id: any): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.apiUrl + id);
+  getProductos(): Observable<Productos[]> {
+    return this.http.get<Productos[]>(this.apiUrl);
   }
-  getProductosAll(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.apiUrl2);
+  ActualizarBitacora(id: number, dato:any): Observable<any> {
+    const url= '/api/bitacory/'
+    return this.http.put(`${url}${id}`, dato)
+    .pipe(
+      tap(() => {
+        this._refresh$.next();
+      })
+    );
   }
-  getProveedores(): Observable<Proveedores[]> {
-    return this.http.get<Proveedores[]>(this.apiUrl3);
+  EliminarBitacora(id:number){
+    const url= '/api/bitacory/'
+    return this.http.delete(`${url}${id}`)
+    .pipe(
+      tap(() => {
+        this._refresh$.next();
+      })
+    );
   }
-  getProductosProv(id2: any): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.apiUrl4 + id2);
-  }
+
 }

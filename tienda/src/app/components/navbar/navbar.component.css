@@ -1,0 +1,21 @@
+/* navbar.component.scss */
+
+.navbar-custom {
+    position: fixed; /* Fija el navbar en la parte superior de la ventana */
+    top: 0; /* Lo coloca en la parte superior */
+    width: 100%; /* Establece el ancho del navbar al 100% del viewport */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    background-color: #93f19a;/* Cambia esto al color que desees */
+}
+
+.navbar-custom .nav-link {
+    color: #000000; /* Color del texto */
+    font-size: 20px;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #ffffff; /* Cambia esto al color que desees */
+}
+li {
+    margin-right: 15px;
+}

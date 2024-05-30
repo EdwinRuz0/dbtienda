@@ -11,6 +11,11 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { HistorialComponent } from './components/historial/historial.component';
+import { AgregarProductoComponent } from './components/agregar-producto/agregar-producto.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +25,12 @@ import { ProveedorComponent } from './components/proveedor/proveedor.component';
     ProductosComponent,
     ProductosALLComponent,
     ProductosProvComponent,
-    ProveedorComponent
+    ProveedorComponent,
+    NavbarComponent,
+    FooterComponent,
+    CategoriaComponent,
+    HistorialComponent,
+    AgregarProductoComponent
   ],
   imports: [
     BrowserModule,
