@@ -17,45 +17,45 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
                 <div class="card shadow">
-                    <form formGroup="form">
+                    <form [formGroup]="form">
                         <h1 class="text-center mt-2">Agregar Nuevo Producto</h1>
                         <div class="row mt-3">
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
-                                    <label for="input2">Nombre del producto</label>
-                                    <input id="input2" type="text" class="form-control"
-                                        formControlName="nombreCientifico" readonly>
+                                    <label for="input1">Nombre del producto</label>
+                                    <input id="input1" type="text" class="form-control"
+                                        formControlName="nombre" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0 mx-auto">
                                 <div class="form-group">
-                                    <label for="input3" class="form-label">Descripcion</label>
-                                    <textarea id="input3" class="form-control" style="resize: none"
-                                        formControlName="etapasFenologicas" readonly ></textarea>
+                                    <label for="input2" class="form-label">Descripcion</label>
+                                    <textarea id="input2" class="form-control" style="resize: none"
+                                        formControlName="descripcion" readonly ></textarea>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
-                                    <label for="input4">Cantidad</label>
-                                    <input id="input4" type="number" class="form-control"
-                                        formControlName="CantidadSembrada">
+                                    <label for="input3">Cantidad</label>
+                                    <input id="input3" type="number" class="form-control"
+                                        formControlName="cantidad">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
-                                    <label for="input6">Precio</label>
-                                    <input id="input6" type="text" class="form-control"
-                                        formControlName="PhSuelo" readonly>
+                                    <label for="input4">Precio</label>
+                                    <input id="input4" type="text" class="form-control"
+                                        formControlName="precio" readonly>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
-                                    <label for="input7">Provedor</label>
+                                    <label for="input5">Provedor</label>
                                     <div class="input-field">
-                                        <select class="form-select form-control" id="input7" formControlName="TipoDeRiego"
+                                        <select class="form-select form-control" id="input5" formControlName="provedor"
                                             aria-label="TipoDeRiego">
-                                            <option *ngFor="let riego of this.riegos" [value]="riego.irrigationName">
-                                                {{riego.irrigationName}}
+                                            <option *ngFor="let p of this.ListProvedor" [value]="p.ProveedorID">
+                                                {{p.NombreProveedor}}
                                             </option>
                                         </select>
                                     </div>
@@ -63,12 +63,12 @@
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
-                                    <label for="input7">Categoria</label>
+                                    <label for="input6">Categoria</label>
                                     <div class="input-field">
-                                        <select class="form-select form-control" id="input7" formControlName="TipoDeRiego"
+                                        <select class="form-select form-control" id="input6" formControlName="categoria"
                                             aria-label="TipoDeRiego">
-                                            <option *ngFor="let riego of this.riegos" [value]="riego.irrigationName">
-                                                {{riego.irrigationName}}
+                                            <option *ngFor="let riego of this.ListProvedor" [value]="riego.ProveedorID">
+                                                {{riego.NombreProveedor}}
                                             </option>
                                         </select>
                                     </div>

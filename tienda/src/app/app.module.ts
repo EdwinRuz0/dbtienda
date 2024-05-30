@@ -12,9 +12,9 @@ import { ProductosALLComponent } from './components/productos-all/productos-all.
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedoresComponent } from './components/proveedor/proveedor.component';
 import { FooterComponent} from './components/footer/footer.component';
-import { NavbarComponent} from './components/navbar/navbar.component'
-import { CategoriaComponent } from './components/categoria/categoria.component';
-import { HistorialComponent } from './components/historial/historial.component';
+import { NavbarComponent} from './components/navbar/navbar.component';
+import { CommonModule } from '@angular/common';
+import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component'
 
 @NgModule({
   declarations: [
@@ -27,11 +27,10 @@ import { HistorialComponent } from './components/historial/historial.component';
     ProveedoresComponent,
     FooterComponent,
     NavbarComponent,
-    ProveedoresComponent,
-    CategoriaComponent,
-    HistorialComponent
+    AgregarProductoComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
