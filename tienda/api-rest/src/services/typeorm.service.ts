@@ -8,8 +8,8 @@ export class TypeormService  implements TypeOrmOptionsFactory{
      return {
         type: 'mssql',
         host: 'localhost',
-        username: 'JosueTamay',
-        password: 'compania12',
+        username: 'AlanFlores',
+        password: 'alan1234',
         port: 1433,
         database: 'Abarrotes_La_Bendicion_De_Dios',
         entities: ['dist//**/*.model.{ts.js}'],
