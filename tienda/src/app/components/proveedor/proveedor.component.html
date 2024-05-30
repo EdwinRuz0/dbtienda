@@ -17,7 +17,7 @@
   </div>
   <div class="container">
       <div class="row text-center">
-          <h1 class="mt-2 fw-bold">Productos Disponibles</h1>
+          <h1 class="mt-2 fw-bold">Proveedores</h1>
       </div>
       <div class="row">
           <div class="col col-med-3"></div>
@@ -34,10 +34,6 @@
           </div>
       </div>
       <div class="row">
-          <div class="col d-flex justify-content-end">
-              <button routerLink="/agregar-bitacora" class="btn btn-primary btn-lg"><i class="bi bi-plus-lg"></i>
-                  Nuevo</button>
-          </div>
       </div>
       <div class="row">
           <div class="col table-responsive">
@@ -48,7 +44,6 @@
                           <th class="text-nowrap">Provedor</th>
                           <th class="text-nowrap">Correo</th>
                           <th class="text-nowrap">Dirección</th>
-                          <th class="text-nowrap">Editar/Elimar</th>
                       </tr>
                   </thead>
                   <tbody class="table-group-divider">
@@ -57,16 +52,6 @@
                           <td >{{ t.NombreProveedor}}</td>
                           <td >{{t.ContactoProveedor}}</td>
                           <td>{{t.DireccionProveedor}}</td>
-          
-                          <td>
-                              <div class="d-flex">
-                                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                      class="btn btn-success" style="margin-right: 5px;"
-                                      (click)="showProductDetails(t)"><i class="bi bi-pencil-square"></i></button>
-                                  <button class="btn btn-danger" (click)="Eliminar(t.ProveedorID)"><i
-                                          class="bi bi-trash"></i></button>
-                              </div>
-                          </td>
                       </tr>
                   </tbody>
               </table>

@@ -78,7 +78,7 @@
           <div class="modal-dialog">
               <div class="modal-content">
                   <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ selectProducto?.name }}</h1>
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ selectProducto?.NombreProducto }}</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
 
@@ -87,61 +87,34 @@
                           <div class="row">
                               <div class="col mx-5">
                                   <div class="mb-3">
-                                      <label for="input1" class="form-label">Cantidad de Fertilizante Aplicado</label>
-                                      <input id="input1" type="text" class="form-control" formControlName="CantidadFertilizante"
-                                          placeholder="{{ selectProducto?.BitacoryFertilizerUsed }}">
+                                      <label for="input1" class="form-label">Precio</label>
+                                      <input id="input1" type="number" class="form-control" formControlName="precio"
+                                          placeholder="{{ selectProducto?.Precio }}">
                                   </div>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col mx-5">
                                   <div class="mb-3">
-                                      <label for="input2" class="form-label">Nombre del Fertilizante Aplicado</label>
-                                      <input id="input2" type="text" class="form-control" formControlName="NombreFertilizante"
-                                          placeholder="{{ selectProducto?.BitacoryFertilizer }}">
+                                      <label for="input2" class="form-label"> Cantidad</label>
+                                      <input id="input2" type="number" class="form-control" formControlName="cantidad"
+                                          placeholder="{{ selectProducto?.CantidadEnStock}}">
                                   </div>
                               </div>
                           </div>
                           <div class="row">
                               <div class="col mx-5">
-                                  <div class="mb-3">
-                                      <label for="input3" class="form-label"> Cantidad  de Nutrientes Necesarios</label>
-                                      <input id="input3" type="text" class="form-control" formControlName="CantidadNutrientes"
-                                          placeholder="{{ selectProducto?.BitacoryNutrientQuantity}}">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col mx-5">
-                                  <div class="mb-3">
-                                      <label for="input4" class="form-label">Nombre(s) de los Nutrientes</label>
-                                      <input id="input4" type="text" class="form-control" formControlName="NombresNutrientes"
-                                          placeholder="{{ selectProducto?.BitacoryNutrientsName }}">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col mx-5">
-                                  <div class="mb-3">
-                                      <label for="input5" class="form-label">Cantidad de Cosecha Obtenida</label>
-                                      <input id="input5" type="text" class="form-control" formControlName="CosechaObtenida"
-                                          placeholder="{{ selectProducto?. BitacoryAmount}}">
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col mx-5">
-                                  <div class="mb-3">
-                                      <label for="input6" class="form-label">Fecha De Cosecha</label>
-                                      <input id="input6" type="date" class="form-control" formControlName="FechaCosecha"
-                                          placeholder="{{ selectProducto?.BitacoryHarvestDate }}">
-                                  </div>
+                                <div class="form-group">
+                                    <label for="input3" class="form-label">Descripcion</label>
+                                    <textarea id="input3" class="form-control" style="resize: none"
+                                        formControlName="descripcion" placeholder="{{ selectProducto?.Descripcion}}" ></textarea>
+                                </div>
                               </div>
                           </div>
                       </form>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" (click)="Actualizar()">Guardar</button>
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" (click)="Actualizar()">Actualizar</button>
                   </div>
               </div>
           </div>

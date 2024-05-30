@@ -17,7 +17,7 @@
     </div>
     <div class="container">
         <div class="row text-center">
-            <h1 class="mt-2 fw-bold">Productos Disponibles</h1>
+            <h1 class="mt-2 fw-bold">Historial</h1>
         </div>
         <div class="row">
             <div class="col col-med-3"></div>
@@ -62,14 +62,6 @@
                             <td >{{t.DatosAnteriores}}</td>
                             <td>{{t.DatosNuevos}}</td>
                             <td>{{t.FechaHora}}</td>
-            
-                            <td>
-                                <div class="d-flex">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        class="btn btn-success" style="margin-right: 5px;"
-                                        (click)="showProductDetails(t)"><i class="bi bi-pencil-square"></i></button>
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>

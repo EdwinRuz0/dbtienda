@@ -27,8 +27,8 @@ export class ProductosService {
   EnviarProducto(dato:any): Observable<any> {
     return this.http.post<any>('/api/producto', dato);
   }
-  ActualizarBitacora(id: number, dato:any): Observable<any> {
-    const url= '/api/bitacory/'
+  ActualizarProducto(id: number, dato:any): Observable<any> {
+    const url= '/api/producto/'
     return this.http.put(`${url}${id}`, dato)
     .pipe(
       tap(() => {

@@ -37,12 +37,9 @@ export class ProductosComponent {
 
   constructor(private fb: FormBuilder, private productosService: ProductosService, private router: Router) {
     this.form = this.fb.group({
-      CantidadFertilizante: [""],
-      NombreFertilizante: [""],
-      CantidadNutrientes: [""],
-      NombresNutrientes: [""],
-      CosechaObtenida: [""],
-      FechaCosecha: [""]
+      precio: [""],
+      cantidad: [""],
+      descripcion: [""],
     })
   }
   crear() {
@@ -146,16 +143,13 @@ export class ProductosComponent {
     this.Producto = [];
     if (this.form.valid) {
       const data: any = {
-        BitacoryFertilizer: this.form.controls['NombreFertilizante'].value,
-        BitacoryFertilizerUsed: this.form.controls['CantidadFertilizante'].value,
-        BitacoryNutrientQuantity: this.form.controls['CantidadNutrientes'].value,
-        BitacoryNutrientsName: this.form.controls['NombresNutrientes'].value,
-        BitacoryAmount: this.form.controls['CosechaObtenida'].value,
-        BitacoryHarvestDate: this.form.controls['FechaCosecha'].value
+        Descripcion: this.form.controls['descripcion'].value,
+        Precio: this.form.controls['precio'].value,
+        CantidadEnStock: this.form.controls['cantidad'].value,
       }
       console.log(data);
 
-      this.productosService.ActualizarBitacora(this.ProductoID, data).subscribe(response => {
+      this.productosService.ActualizarProducto(this.ProductoID, data).subscribe(response => {
         console.log('Respuesta del backend:', response);
         console.log('enviado xd')
         this.alertBueno = true;

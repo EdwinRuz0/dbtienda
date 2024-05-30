@@ -44,7 +44,6 @@
                 <table class="table table-hover align-middle">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">ID</th>
                             <th class="text-nowrap">NombreCategoria</th>
                             <th class="text-nowrap">Descripción</th>
                         </tr>
@@ -53,16 +52,6 @@
                         <tr *ngFor="let t of buscarTarjetas() || tarjetasFiltradas">
                             <td >{{ t.NombreCategoria }}</td>
                             <td >{{ t.Descripcion}}</td>
-            
-                            <td>
-                                <div class="d-flex">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        class="btn btn-success" style="margin-right: 5px;"
-                                        (click)="showProductDetails(t)"><i class="bi bi-pencil-square"></i></button>
-                                    <button class="btn btn-danger" (click)="Eliminar(t.id)"><i
-                                            class="bi bi-trash"></i></button>
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
