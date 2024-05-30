@@ -15,6 +15,8 @@ import { FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent} from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component'
+import { HistorialComponent } from './components/historial/historial.component';
+import { CategoriaComponent } from './components/categoria/categoria.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,10 @@ import { AgregarProductoComponent} from './components/agregar-producto/agregar-p
     ProveedoresComponent,
     FooterComponent,
     NavbarComponent,
-    AgregarProductoComponent
+    AgregarProductoComponent,
+    HistorialComponent,
+    CategoriaComponent,
+    ProveedoresComponent
   ],
   imports: [
     CommonModule,
