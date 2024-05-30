@@ -1,42 +1,169 @@
-<!-- products.component.html -->
-<body>
-    <header>
-        <nav>
-          <div class="logo">Abarrotes La Bendición de Dios</div>
-          <ul>
-            <li><a href="productsAll">Todos Los Productos</a></li>
-            <li><a href="productsProv">Productos por proveedores</a></li>
-            <li><a href="ayuda">Contacto</a></li>
-          </ul>
-        </nav>
-      </header>
-      
-      <main>
-        <div class="container ">
-            <div class="row">
-            <section class="featured-products">
-                <h2 class="text-center mb-4">Proveedores Disponibles</h2>
-                <div class="row justify-content-center">
-                  <div class=" col col-md-3" *ngFor="let proveedor of proveedores; let i = index">
-                    <div class="card shadow mb-4 ml-3">
-                      <img src="../../../assets/Imagen-{{proveedor.ProveedorID}}.jpeg" class="card-img-top" alt="{{proveedor.NombreProveedor}}">
-                      <div class="card-body">
-                        <h5 class="card-title">{{proveedor.NombreProveedor}}</h5>
-                        <p class="card-text">Contacto: {{proveedor.ContactoProveedor}}</p>
-                        <p class="card-text">Direccion: {{proveedor.DireccionProveedor}}</p>
-                        <button class="btn btn-primary" (click)="explorarProveedor(proveedor.ProveedorID)">Explorar</button>
+<body class="">
+  <div *ngIf="this.alert"
+      class="alert alert-danger d-flex align-items-center justify-content-center alert-dismissible" id="alert"
+      role="alert">
+      <i class="bi bi-exclamation-circle fs-5 mx-2"></i>
+      <div>
+          {{errorMessage}}
+      </div>
+  </div>
+  <div *ngIf="this.alertBueno"
+      class="alert alert-success d-flex align-items-center justify-content-center alert-dismissible" id="alert"
+      role="alert">
+      <i class="bi bi-check-circle fs-5 mx-2"></i>
+      <div>
+          {{mensajeBueno}}
+      </div>
+  </div>
+  <div class="container">
+      <div class="row text-center">
+          <h1 class="mt-2 fw-bold">Productos Disponibles</h1>
+      </div>
+      <div class="row">
+          <div class="col col-med-3"></div>
+          <div class="col-md-5 mb-3 text-right">
+              <form class="form-inline">
+                  <div class="input-group">
+                      <input [(ngModel)]="Busqueda" name="buscar" class="form-control rounded" placeholder="Buscar"
+                          (ngModelChange)="checkMostrarAlerta()">
+                      <div class="input-group-append mx-2">
+                          <button type="submit" class="btn btn-primary"><i class="bi bi-search mr-2"></i></button>
                       </div>
-                    </div>
                   </div>
-                </div>
-              </section>
+              </form>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col d-flex justify-content-end">
+              <button routerLink="/agregar-bitacora" class="btn btn-primary btn-lg"><i class="bi bi-plus-lg"></i>
+                  Nuevo</button>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col table-responsive">
+              <table class="table table-hover align-middle">
+                  <thead>
+                      <tr>
+                          <th class="text-nowrap">ID</th>
+                          <th class="text-nowrap">Producto</th>
+                          <th class="text-nowrap">Precio</th>
+                          <th class="text-nowrap">Descripcion/th>
+                          <th class="text-nowrap">Cantidad existente</th>
+                      </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                      <tr *ngFor="let t of buscarTarjetas() || tarjetasFiltradas">
+                          <td >{{ t.ProveedorID }}</td>
+                          <td >{{ t.NombreProveedor}}</td>
+                          <td >{{t.ContactoProveedor}}</td>
+                          <td>{{t.DireccionProveedor}}</td>
+          
+                          <td>
+                              <div class="d-flex">
+                                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                      class="btn btn-success" style="margin-right: 5px;"
+                                      (click)="showProductDetails(t)"><i class="bi bi-pencil-square"></i></button>
+                                  <button class="btn btn-danger" (click)="Eliminar(t.ProveedorID)"><i
+                                          class="bi bi-trash"></i></button>
+                              </div>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">{{ selectProducto?.name }}</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body">
+                      <form [formGroup]="form">
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input1" class="form-label">Cantidad de Fertilizante Aplicado</label>
+                                      <input id="input1" type="text" class="form-control" formControlName="CantidadFertilizante"
+                                          placeholder="{{ selectProducto?.BitacoryFertilizerUsed }}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input2" class="form-label">Nombre del Fertilizante Aplicado</label>
+                                      <input id="input2" type="text" class="form-control" formControlName="NombreFertilizante"
+                                          placeholder="{{ selectProducto?.BitacoryFertilizer }}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input3" class="form-label"> Cantidad  de Nutrientes Necesarios</label>
+                                      <input id="input3" type="text" class="form-control" formControlName="CantidadNutrientes"
+                                          placeholder="{{ selectProducto?.BitacoryNutrientQuantity}}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input4" class="form-label">Nombre(s) de los Nutrientes</label>
+                                      <input id="input4" type="text" class="form-control" formControlName="NombresNutrientes"
+                                          placeholder="{{ selectProducto?.BitacoryNutrientsName }}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input5" class="form-label">Cantidad de Cosecha Obtenida</label>
+                                      <input id="input5" type="text" class="form-control" formControlName="CosechaObtenida"
+                                          placeholder="{{ selectProducto?. BitacoryAmount}}">
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row">
+                              <div class="col mx-5">
+                                  <div class="mb-3">
+                                      <label for="input6" class="form-label">Fecha De Cosecha</label>
+                                      <input id="input6" type="date" class="form-control" formControlName="FechaCosecha"
+                                          placeholder="{{ selectProducto?.BitacoryHarvestDate }}">
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close" (click)="Actualizar()">Guardar</button>
+                  </div>
               </div>
-        </div>
-        
-      </main>
-      
-      <footer>
-        <p class="text-center">&copy; 2023 Abarrotes La Bendición de Dios</p>
-      </footer>
-    </body>
-    
+          </div>
+      </div>
+      <div class="row" *ngIf="buscarTarjetas().length === 0">
+          <div class="col text-center carga">
+              <div class="mt-4 d-flex justify-content-center">
+                  <div class="spinner-border" style="width: 8rem; height: 8rem;" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                  </div>
+              </div>
+              <p class="mt-2" style="font-size: 4rem;">Cargando...</p>
+          </div>
+      </div>
+      <div *ngIf="mostrarMensajeError"
+          class="alert alert-danger d-flex align-items-center justify-content-center alert-dismissible text-center"
+          id="alert" role="alert">
+          <div class="d-flex align-items-center">
+              <i class="bi bi-exclamation-circle fs-5 mx-2"></i>
+              <div class="fs-5">
+                  <p class="mb-0">No se encontraron resultados.</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>

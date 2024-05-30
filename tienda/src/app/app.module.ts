@@ -10,7 +10,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
-import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { ProveedoresComponent } from './components/proveedor/proveedor.component';
 import { FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent} from './components/navbar/navbar.component'
 
@@ -22,7 +22,7 @@ import { NavbarComponent} from './components/navbar/navbar.component'
     ProductosComponent,
     ProductosALLComponent,
     ProductosProvComponent,
-    ProveedorComponent,
+    ProveedoresComponent,
     FooterComponent,
     NavbarComponent
   ],
