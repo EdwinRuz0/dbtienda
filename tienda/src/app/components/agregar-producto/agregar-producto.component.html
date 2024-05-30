@@ -17,7 +17,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-8">
                 <div class="card shadow">
-                    <form [formGroup]="form">
+                    <form formGroup="form">
                         <h1 class="text-center mt-2">Agregar Bitacora</h1>
                         <div class="row mt-3">
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
@@ -25,7 +25,7 @@
                                     <label for="input1">Nombre del Cultivo</label>
                                     <div class="input-field">
                                         <select class="form-select form-control" id="input1" formControlName="cultivo"
-                                            aria-label="Institución" (change)="onSelectCultivo($event)">
+                                            aria-label="Institución" >
                                             <option *ngFor="let cultivo of cultivo" [value]="cultivo.CropsSeed">
                                                 {{cultivo.CropsSeed}}
                                             </option>
@@ -59,7 +59,7 @@
                                     <label for="input5">Tipo de suelo</label>
                                     <div class="input-field">
                                         <select class="form-select form-control" id="input5" formControlName="TipoDeSuelo"
-                                            aria-label="TipoDeSuelo" (change)="onSelectSuelo($event)">
+                                            aria-label="TipoDeSuelo" >
                                             <option *ngFor="let suelo of this.suelos" [value]="suelo.SurfaceType">
                                                 {{suelo.SurfaceType}}
                                             </option>
@@ -79,7 +79,7 @@
                                     <label for="input7">Tipo de riego</label>
                                     <div class="input-field">
                                         <select class="form-select form-control" id="input7" formControlName="TipoDeRiego"
-                                            aria-label="TipoDeRiego" (change)="onSelectRiego($event)">
+                                            aria-label="TipoDeRiego">
                                             <option *ngFor="let riego of this.riegos" [value]="riego.irrigationName">
                                                 {{riego.irrigationName}}
                                             </option>

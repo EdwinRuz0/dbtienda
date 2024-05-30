@@ -109,7 +109,7 @@ export class ProductosComponent {
   limpiarDatosModal() {
     this.selectProducto = null; // o asigna un objeto vacío, dependiendo de tu implementación
   }
-  Eliminar(id: number) {
+  Eliminar(id: any) {
     this.productosService.EliminarBitacora(id).subscribe(resp => {
       this.alertBueno = true;
       this.mensajeBueno = 'Registro Eliminado con exito';

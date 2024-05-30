@@ -5,13 +5,13 @@ export interface Categoria {
     Descripcion: string;
 }
 export interface Productos{
-    ProductoID: number;
+    ProductoID?: number;
     NombreProducto: string;
     Descripcion: string;
     Precio: number;
     CantidadEnStock: number;
-    CategoriaID: number;
-    ProveedorID: number;
+    CategoriaID?: number;
+    ProveedorID?: number;
 }
 export interface Usuario{
     username: string;
