@@ -110,7 +110,7 @@ export class ProductosComponent {
     this.selectProducto = null; // o asigna un objeto vacío, dependiendo de tu implementación
   }
   Eliminar(id: any) {
-    this.productosService.EliminarBitacora(id).subscribe(resp => {
+    this.productosService.EliminarProducto(id).subscribe(resp => {
       this.alertBueno = true;
       this.mensajeBueno = 'Registro Eliminado con exito';
       setTimeout(() => {

@@ -24,14 +24,14 @@
                                 <div class="form-group">
                                     <label for="input1">Nombre del producto</label>
                                     <input id="input1" type="text" class="form-control"
-                                        formControlName="nombre" readonly>
+                                        formControlName="nombre">
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0 mx-auto">
                                 <div class="form-group">
                                     <label for="input2" class="form-label">Descripcion</label>
                                     <textarea id="input2" class="form-control" style="resize: none"
-                                        formControlName="descripcion" readonly ></textarea>
+                                        formControlName="descripcion"  ></textarea>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
@@ -44,8 +44,8 @@
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
                                 <div class="form-group">
                                     <label for="input4">Precio</label>
-                                    <input id="input4" type="text" class="form-control"
-                                        formControlName="precio" readonly>
+                                    <input id="input4" type="number" class="form-control"
+                                        formControlName="precio" >
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5 col-xl-5 mx-auto my-2 my-md-0">
@@ -67,8 +67,8 @@
                                     <div class="input-field">
                                         <select class="form-select form-control" id="input6" formControlName="categoria"
                                             aria-label="TipoDeRiego">
-                                            <option *ngFor="let riego of this.ListProvedor" [value]="riego.ProveedorID">
-                                                {{riego.NombreProveedor}}
+                                            <option *ngFor="let riego of this.ListCategoria" [value]="riego.id">
+                                                {{riego.NombreCategoria}}
                                             </option>
                                         </select>
                                     </div>

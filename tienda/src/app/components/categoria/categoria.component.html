@@ -24,7 +24,7 @@
             <div class="col-md-5 mb-3 text-right">
                 <form class="form-inline">
                     <div class="input-group">
-                        <input [(ngModel)]="Busqueda" name="buscar" class="form-control rounded" placeholder="Buscar"
+                        <input (ngModel)="Busqueda" name="buscar" class="form-control rounded" placeholder="Buscar"
                             (ngModelChange)="checkMostrarAlerta()">
                         <div class="input-group-append mx-2">
                             <button type="submit" class="btn btn-primary"><i class="bi bi-search mr-2"></i></button>

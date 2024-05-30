@@ -14,7 +14,9 @@ import { ProveedoresComponent } from './components/proveedor/proveedor.component
 import { FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent} from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
-import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component'
+import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component';
+import { CategoriaComponent} from './components/categoria/categoria.component';
+import { HistorialComponent} from './components/historial/historial.component'
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { AgregarProductoComponent} from './components/agregar-producto/agregar-p
     ProveedoresComponent,
     FooterComponent,
     NavbarComponent,
-    AgregarProductoComponent
+    AgregarProductoComponent,
+    CategoriaComponent,
+    HistorialComponent
   ],
   imports: [
     CommonModule,

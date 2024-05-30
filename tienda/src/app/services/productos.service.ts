@@ -25,7 +25,7 @@ export class ProductosService {
     return this.http.get<Productos[]>(this.apiUrl);
   }
   EnviarProducto(dato:any): Observable<any> {
-    return this.http.post<any>('/api/bitacory', dato);
+    return this.http.post<any>('/api/producto', dato);
   }
   ActualizarBitacora(id: number, dato:any): Observable<any> {
     const url= '/api/bitacory/'
@@ -36,8 +36,8 @@ export class ProductosService {
       })
     );
   }
-  EliminarBitacora(id:number){
-    const url= '/api/bitacory/'
+  EliminarProducto(id:number){
+    const url= '/api/producto/'
     return this.http.delete(`${url}${id}`)
     .pipe(
       tap(() => {

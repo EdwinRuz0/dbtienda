@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
-import { Productos, Proveedores } from 'src/app/models/model';
+import { Categoria, Productos, Proveedores } from 'src/app/models/model';
 import { ProductosService } from 'src/app/services/productos.service';
 import { ProveedorService} from 'src/app/services/proveedor.service';
 import { CategoriaService} from 'src/app/services/categoria.service';
@@ -23,6 +23,7 @@ export class AgregarProductoComponent {
   alertMalo: boolean = false;
   mensajeBueno: string = '';
   ListProvedor : Proveedores [] =[]
+  ListCategoria : Categoria [] = []
 
   constructor(private fb: FormBuilder, private auth: AuthServiceService, private producto: ProductosService, private categoria : CategoriaService, private provedor: ProveedorService) {
     this.form = this.fb.group({
@@ -40,6 +41,16 @@ export class AgregarProductoComponent {
         console.log(proveedor);
         
         this.ListProvedor = proveedor;
+      },
+      (error) => {
+        console.error('Error al obtener productos', error);
+      }
+    );
+    this.categoria.getCategorias().subscribe(
+      (categoria) => {
+        console.log(categoria);
+        
+        this.ListCategoria = categoria;
       },
       (error) => {
         console.error('Error al obtener productos', error);
@@ -74,10 +85,12 @@ export class AgregarProductoComponent {
   GuardarCultivo() {
     if (this.form.valid) {
       const data: Productos = {
-        NombreProducto: this.form.controls['cultivo'].value,
-        Descripcion: this.form.controls['cultivo'].value,
-        Precio: this.form.controls['cultivo'].value,
-        CantidadEnStock: this.form.controls['cultivo'].value,
+        NombreProducto: this.form.controls['nombre'].value,
+        Descripcion: this.form.controls['descripcion'].value,
+        Precio: this.form.controls['precio'].value,
+        CantidadEnStock: this.form.controls['cantidad'].value,
+        CategoriaID: this.form.controls['categoria'].value,
+        ProductoID: this.form.controls['provedor'].value
 
       }
       console.log(data);
@@ -85,7 +98,7 @@ export class AgregarProductoComponent {
         console.log('Respuesta del backend:', response);
         console.log('enviado xd')
         this.alertBueno = true;
-        this.mensajeBueno = 'Bitacora Agregada con exito';
+        this.mensajeBueno = 'Producto Agregado Con Exito';
         setTimeout(() => {
           this.alertBueno = false;
           this.mensajeBueno = '';
