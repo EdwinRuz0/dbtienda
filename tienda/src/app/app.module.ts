@@ -12,7 +12,9 @@ import { ProductosALLComponent } from './components/productos-all/productos-all.
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedoresComponent } from './components/proveedor/proveedor.component';
 import { FooterComponent} from './components/footer/footer.component';
-import { NavbarComponent} from './components/navbar/navbar.component'
+import { NavbarComponent} from './components/navbar/navbar.component';
+import { CommonModule } from '@angular/common';
+import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component'
 
 @NgModule({
   declarations: [
@@ -24,9 +26,11 @@ import { NavbarComponent} from './components/navbar/navbar.component'
     ProductosProvComponent,
     ProveedoresComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    AgregarProductoComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,

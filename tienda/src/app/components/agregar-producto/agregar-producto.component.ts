@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms'
-import { Productos } from 'src/app/models/model';
+import { Productos, Proveedores } from 'src/app/models/model';
 import { ProductosService } from 'src/app/services/productos.service';
+import { ProveedorService} from 'src/app/services/proveedor.service';
+import { CategoriaService} from 'src/app/services/categoria.service';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
@@ -20,17 +22,29 @@ export class AgregarProductoComponent {
   alertBueno: boolean = false;
   alertMalo: boolean = false;
   mensajeBueno: string = '';
+  ListProvedor : Proveedores [] =[]
 
-  constructor(private fb: FormBuilder, private auth: AuthServiceService, private producto: ProductosService) {
+  constructor(private fb: FormBuilder, private auth: AuthServiceService, private producto: ProductosService, private categoria : CategoriaService, private provedor: ProveedorService) {
     this.form = this.fb.group({
-      NombreProducto: ["", Validators.required],
-      Descripcion: ["", Validators.required],
-      Precio: ["", Validators.required],
-      CantidadEnStock: ["", Validators.required],
+      nombre: ["", Validators.required],
+      descripcion: ["", Validators.required],
+      precio: ["", Validators.required],
+      cantidad: ["", Validators.required],
+      categoria: ["", Validators.required],
+      provedor: ["", Validators.required],
     })
   }
   ngOnInit(): void {
-
+    this.provedor.getProveedores().subscribe(
+      (proveedor) => {
+        console.log(proveedor);
+        
+        this.ListProvedor = proveedor;
+      },
+      (error) => {
+        console.error('Error al obtener productos', error);
+      }
+    );
   }
   crear() {
     if (this.form.invalid) {
