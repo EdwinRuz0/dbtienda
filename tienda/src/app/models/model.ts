@@ -4,6 +4,15 @@ export interface Categoria {
     NombreCategoria: string;
     Descripcion: string;
 }
+export interface Historial{
+    AuditoriaID: number;
+    NombreTabla: string;
+    Operacion:string;
+    Usuario:string;
+    FechaHora:string;
+    DatosAnteriores:string;
+    DatosNuevos:string;
+}
 export interface Productos{
     ProductoID?: number;
     NombreProducto: string;
