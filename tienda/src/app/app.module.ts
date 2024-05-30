@@ -11,6 +11,8 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
+import { FooterComponent} from './components/footer/footer.component';
+import { NavbarComponent} from './components/navbar/navbar.component'
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ProveedorComponent } from './components/proveedor/proveedor.component';
     ProductosComponent,
     ProductosALLComponent,
     ProductosProvComponent,
-    ProveedorComponent
+    ProveedorComponent,
+    FooterComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

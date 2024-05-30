@@ -95,7 +95,7 @@ export class ProductosComponent {
       tarjeta.NombreProducto.toLowerCase().includes(this.Busqueda.toLowerCase())
     );
   }
-  showBitacoraDetails(Producto: any) {
+  showProductDetails(Producto: any) {
     this.selectProducto = Producto;
     this.ProductoID = Producto.ProductoID;
     this.NombreProducto = Producto.NombreProducto;
