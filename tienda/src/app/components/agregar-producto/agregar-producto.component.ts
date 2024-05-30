@@ -23,10 +23,10 @@ export class AgregarProductoComponent {
 
   constructor(private fb: FormBuilder, private auth: AuthServiceService, private producto: ProductosService) {
     this.form = this.fb.group({
-      NombreProducto:  ["", Validators.required],
-        Descripcion: ["", Validators.required],
-        Precio: ["", Validators.required],
-        CantidadEnStock: ["", Validators.required],
+      NombreProducto: ["", Validators.required],
+      Descripcion: ["", Validators.required],
+      Precio: ["", Validators.required],
+      CantidadEnStock: ["", Validators.required],
     })
   }
   ngOnInit(): void {
@@ -61,9 +61,9 @@ export class AgregarProductoComponent {
     if (this.form.valid) {
       const data: Productos = {
         NombreProducto: this.form.controls['cultivo'].value,
-        Descripcion:this.form.controls['cultivo'].value,
-        Precio:this.form.controls['cultivo'].value,
-        CantidadEnStock:this.form.controls['cultivo'].value,
+        Descripcion: this.form.controls['cultivo'].value,
+        Precio: this.form.controls['cultivo'].value,
+        CantidadEnStock: this.form.controls['cultivo'].value,
 
       }
       console.log(data);

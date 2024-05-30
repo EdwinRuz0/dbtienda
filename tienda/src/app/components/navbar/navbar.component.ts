@@ -18,10 +18,8 @@ export class NavbarComponent{
   suscription!: Subscription;
   imagePerfil: string='';
   constructor(private authService: AuthServiceService, private user: UserService, private image: ImagenesService) { 
-    this.getImage();
-    this.suscription = this.image.refresh$.subscribe(() => {
-      this.getImage();
-    })
+    this.tokenUser=this.user.getToken()!;
+    this.nameUser=this.authService.getiNameUser(this.tokenUser);
     // console.log('este es el rol del usuario',this.user.getRole());
     
     if(this.authService.getRoleUser(this.tokenUser)==='administrador'){
@@ -35,19 +33,7 @@ export class NavbarComponent{
     
 
   }
-  getImage(){
-    this.tokenUser=this.user.getToken()!;
-    this.nameUser=this.authService.getiNameUser(this.tokenUser);
-    this.image.getImage(this.authService.getimageIdUser(this.tokenUser)).subscribe((Image: any) => {
-      console.log(Image.ImageData);
-
-      if (Image.ImageData) {
-        this.imagePerfil = Image.ImageData;
-      } else {
-        this.imagePerfil = '';
-      }
-    });
-  }
+  
   isLoggedIn() {
     return this.authService.isAuthenticated()
     
