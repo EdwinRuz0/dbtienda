@@ -13,6 +13,8 @@ import { ProductosProvComponent } from './components/productos-prov/productos-pr
 import { ProveedoresComponent } from './components/proveedor/proveedor.component';
 import { FooterComponent} from './components/footer/footer.component';
 import { NavbarComponent} from './components/navbar/navbar.component'
+import { CategoriaComponent } from './components/categoria/categoria.component';
+import { HistorialComponent } from './components/historial/historial.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,10 @@ import { NavbarComponent} from './components/navbar/navbar.component'
     ProductosProvComponent,
     ProveedoresComponent,
     FooterComponent,
-    NavbarComponent
+    NavbarComponent,
+    ProveedoresComponent,
+    CategoriaComponent,
+    HistorialComponent
   ],
   imports: [
     BrowserModule,
