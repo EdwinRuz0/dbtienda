@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       this.loginService.enviarDatosBackend(datos).subscribe(
         (response) => {
           console.log('Login exitoso', response);
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('authToken', response.token);
           localStorage.setItem('userRole', response.role);
           localStorage.setItem('userId', response.id.toString());
           localStorage.setItem('userName', response.name);
@@ -68,6 +68,6 @@ export class LoginComponent implements OnInit {
   onRegister(): void {
     console.log('Redirigiendo a la página de registro...');
     this.forma.clearValidators();
-    this.router.navigate(['']);
+    this.router.navigate(['/register']);
   }
 }

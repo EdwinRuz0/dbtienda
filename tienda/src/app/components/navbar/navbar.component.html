@@ -1,52 +1,60 @@
-<nav class="navbar navbar-expand-lg navbar-custom">
+<nav class="navbar navbar-expand-lg navbar-custom" [ngClass]="{'navbar-admin': esAdmi, 'navbar-usuario': esUsuario}">
     <div class="container-fluid">
-        <a class="navbar-brand text-dark" routerLink="/home">
-                    La Bendicion De Dios
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-            <ul class="navbar-nav mb-2 mb-lg-0">
-                <li class="nav-item" >
-                    <a class="nav-link active" aria-current="page" routerLink="/products">Productos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page"
-                        routerLink="/categoria">Categorias</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" 
-                        routerLink="/proveedores">Provedores</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" 
-                        routerLink="/historial">Historial</a>
-                </li>
-                <li class="nav-item dropdown" >
-                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                        id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <a class=" nav-link dropdown-item">
-                            {{nameUser}} </a>
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" routerLink="/perfil-usuario"><i class="bi bi-person-fill"></i>
-                                Perfil</a></li>
-                        <li><a class="dropdown-item" routerLink="/centro-ayuda"><i class="bi bi-question-circle"></i>
-                                Ayuda</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" (click)="logout()" routerLink="/home"><i
-                                    class="bi bi-box-arrow-left"></i> Salir</a></li>
-                    </ul>
-                </li>
+      <a class="navbar-brand text-dark" routerLink="/home">
+        La Bendición De Dios
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+  
+          <!-- Menú para administrador -->
+          <ng-container *ngIf="esAdmi">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/products">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/categoria">Categorías</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/proveedores">Proveedores</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/historial">Historial</a>
+            </li>
+          </ng-container>
+  
+          <!-- Menú para usuario normal -->
+          <ng-container *ngIf="esUsuario">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/products">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/categoria">Categorías</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/historial">Historial</a>
+            </li>
+          </ng-container>
+  
+          <!-- Dropdown de usuario (para ambos) -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownUser1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ nameUser }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser1">
+              <li><a class="dropdown-item" routerLink="/perfil"><i class="bi bi-person-fill"></i> Perfil</a></li>
+              <li><a class="dropdown-item" routerLink="/centro-ayuda"><i class="bi bi-question-circle"></i> Ayuda</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" (click)="logout()" routerLink="/"><i class="bi bi-box-arrow-left"></i> Salir</a></li>
             </ul>
-        </div>
+          </li>
+  
+        </ul>
+      </div>
     </div>
-</nav>
-
-
-<router-outlet></router-outlet>
+  </nav>
+  

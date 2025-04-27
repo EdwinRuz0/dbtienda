@@ -26,7 +26,7 @@ export class CategoriaComponent {
   nameImagen: string = '';
   suscription!: Subscription;
   selectProducto: any;
-
+  roleUser: string = '';
   ProductoID!: number;
   NombreProducto!: string;
   Descripcion!: string;
@@ -44,6 +44,7 @@ export class CategoriaComponent {
       CosechaObtenida: [""],
       FechaCosecha: [""]
     })
+    this.roleUser = localStorage.getItem('userRole') || '';
   }
   crear() {
     if (this.form.invalid) {

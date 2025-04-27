@@ -16,13 +16,16 @@ import { NavbarComponent} from './components/navbar/navbar.component';
 import { CommonModule } from '@angular/common';
 import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component';
 import { CategoriaComponent} from './components/categoria/categoria.component';
-import { HistorialComponent} from './components/historial/historial.component'
+import { HistorialComponent} from './components/historial/historial.component';
+import { RegisterComponent } from './components/register/register.component'
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    PerfilComponent,
     ProductosComponent,
     ProductosALLComponent,
     ProductosProvComponent,
@@ -31,7 +34,8 @@ import { HistorialComponent} from './components/historial/historial.component'
     NavbarComponent,
     AgregarProductoComponent,
     CategoriaComponent,
-    HistorialComponent
+    HistorialComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,
@@ -40,9 +44,6 @@ import { HistorialComponent} from './components/historial/historial.component'
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
-    RouterModule.forRoot([
-      // {path: 'home', component:HomeComponent},
-    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import {AuthServiceService} from 'src/app/services/auth-service.service';
-import { UserService} from 'src/app/services/user.service';
-import { ImagenesService} from 'src/app/services/imagenes.service';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from 'src/app/services/user.service';
+import { ImagenesService } from 'src/app/services/imagenes.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,38 +8,35 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-
-export class NavbarComponent{
-  esAdmi: boolean=false;
-  esUsuario:boolean=false;
-  tokenUser: string='';
-  nameUser: string='';
+export class NavbarComponent implements OnInit {
+  esAdmi: boolean = false;
+  esUsuario: boolean = false;
+  roleUser: string = '';
+  nameUser: string = '';
   suscription!: Subscription;
-  imagePerfil: string='';
-  constructor(private authService: AuthServiceService, private user: UserService, private image: ImagenesService) { 
-    this.tokenUser=this.user.getToken()!;
-    this.nameUser=this.authService.getiNameUser(this.tokenUser);
-    // console.log('este es el rol del usuario',this.user.getRole());
-    
-    if(this.authService.getRoleUser(this.tokenUser)==='administrador'){
-      this.esAdmi=true;
-      // console.log('es administrador');
-      
-    }else if(this.authService.getRoleUser(this.tokenUser)==='usuario'){
-      console.log('es usuario')
-      // this.esUsuario=true;
-    }
-    
+  imagePerfil: string = '';
 
+  constructor(private user: UserService, private image: ImagenesService) {}
+
+  ngOnInit(): void {
+    this.roleUser = localStorage.getItem('userRole') || '';
+    console.log('rol:', this.roleUser);
+
+    this.nameUser = localStorage.getItem('userName') || '';
+    this.imagePerfil = localStorage.getItem('imagePerfil') || '';
+
+    if (this.roleUser === 'administrador') {
+      this.esAdmi = true;
+    } else if (this.roleUser === 'usuario') {
+      this.esUsuario = true;
+    }
   }
-  
-  isLoggedIn() {
-    return this.authService.isAuthenticated()
-    
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('authToken');
   }
-  logout(){
-    this.authService.logout();
+
+  logout() {
     localStorage.clear();
   }
-
 }

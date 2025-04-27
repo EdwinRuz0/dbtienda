@@ -26,7 +26,7 @@ export class ProductosComponent {
   nameImagen: string = '';
   suscription!: Subscription;
   selectProducto: any;
-
+  roleUser: string = '';
   ProductoID!: number;
   NombreProducto!: string;
   Descripcion!: string;
@@ -41,6 +41,7 @@ export class ProductosComponent {
       cantidad: [""],
       descripcion: [""],
     })
+    this.roleUser = localStorage.getItem('userRole') || '';
   }
   crear() {
     if (this.form.invalid) {

@@ -4,7 +4,6 @@ import { Categoria, Productos, Proveedores } from 'src/app/models/model';
 import { ProductosService } from 'src/app/services/productos.service';
 import { ProveedorService} from 'src/app/services/proveedor.service';
 import { CategoriaService} from 'src/app/services/categoria.service';
-import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-agregar-producto',
@@ -25,7 +24,7 @@ export class AgregarProductoComponent {
   ListProvedor : Proveedores [] =[]
   ListCategoria : Categoria [] = []
 
-  constructor(private fb: FormBuilder, private auth: AuthServiceService, private producto: ProductosService, private categoria : CategoriaService, private provedor: ProveedorService) {
+  constructor(private fb: FormBuilder,  private producto: ProductosService, private categoria : CategoriaService, private provedor: ProveedorService) {
     this.form = this.fb.group({
       nombre: ["", Validators.required],
       descripcion: ["", Validators.required],

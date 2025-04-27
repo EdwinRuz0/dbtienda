@@ -11,23 +11,23 @@ import { FooterComponent} from './components/footer/footer.component';
 import { CategoriaComponent} from './components/categoria/categoria.component';
 import { HistorialComponent} from './components/historial/historial.component';
 import { AgregarProductoComponent} from './components/agregar-producto/agregar-producto.component';
+import { RegisterComponent } from './components/register/register.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 const routes: Routes = [
-{
-  path: '', //ruta del nabvar vacia por el momento 
-  component: NavbarComponent,
-  children: [
-    { path: '', component: LoginComponent },
-    { path: 'home', component: HomeComponent },
-    { path: 'products', component: ProductosComponent },
-    { path: 'proveedores', component: ProveedoresComponent },
-    { path: 'footer', component : FooterComponent},
-    { path: 'categoria', component: CategoriaComponent},
-    { path: 'historial', component: HistorialComponent},
-    { path: 'agregar-producto', component: AgregarProductoComponent}
-  ]
-},
+  { path: '', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'products', component: ProductosComponent },
+  { path: 'proveedores', component: ProveedoresComponent },
+  { path: 'footer', component: FooterComponent },
+  { path: 'categoria', component: CategoriaComponent },
+  { path: 'historial', component: HistorialComponent },
+  { path: 'agregar-producto', component: AgregarProductoComponent },
+  { path: '**', redirectTo: '' }, // opcional: cualquier ruta inválida te regresa al login
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

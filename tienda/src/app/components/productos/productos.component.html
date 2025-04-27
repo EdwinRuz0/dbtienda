@@ -34,11 +34,12 @@
           </div>
       </div>
       <div class="row">
-          <div class="col d-flex justify-content-end">
-              <button routerLink="/agregar-producto" class="btn btn-primary btn-lg"><i class="bi bi-plus-lg"></i>
-                  Nuevo</button>
-          </div>
-      </div>
+        <div class="col d-flex justify-content-end" *ngIf="roleUser === 'administrador'">
+          <button routerLink="/agregar-producto" class="btn btn-primary btn-lg">
+            <i class="bi bi-plus-lg"></i> Nuevo
+          </button>
+        </div>
+      </div>      
       <div class="row">
           <div class="col table-responsive">
               <table class="table table-hover align-middle">

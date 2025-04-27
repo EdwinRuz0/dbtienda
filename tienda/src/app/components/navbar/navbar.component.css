@@ -19,3 +19,11 @@
 li {
     margin-right: 15px;
 }
+.navbar-admin {
+    background-color: #007bff !important; /* azul administrador */
+  }
+  
+  .navbar-usuario {
+    background-color: #28a745 !important; /* verde usuario */
+  }
+  
