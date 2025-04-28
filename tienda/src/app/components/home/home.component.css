@@ -1,4 +1,4 @@
-/* home.component.css */
+home.component.css
 
 body {
     font-family: 'Arial', sans-serif;
@@ -44,7 +44,7 @@ body {
     padding: 30px 0;
   }
   
-  /* Estilo para cada categoría */
+  /* Estilo para cada producto */
   .featured-products {
     max-width: 1200px;
     margin: 0 auto;
@@ -62,7 +62,7 @@ body {
     margin: 10px;
     transition: transform 0.3s ease;
     width: 200px;
-    height: 310px;
+    height: 350px;
   }
   
   .card:hover {
@@ -96,16 +96,18 @@ body {
 
   .card-body {
     padding: 20px;
+    height: 20px;
   }
   
   .card-title {
     font-size: 19px;
     margin-bottom: 10px;
+    height: 25px;
   }
   
   .card-text {
     color: #555;
-    height: 50px;
+    height: 20px;
   }
   
   .btn-primary {
@@ -123,7 +125,7 @@ body {
   }
   
   footer {
-    background-color: #f8f9fa;
+    background-color: #546270;
     text-align: center;
     padding: 10px 0;
   }

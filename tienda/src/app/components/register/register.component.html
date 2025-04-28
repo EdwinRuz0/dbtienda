@@ -1,0 +1,23 @@
+<div class="background-container">
+  <div class="background-animation"></div>
+</div>
+
+<div class="login-container">
+  <div class="form-container">
+    <h1>CREAR CUENTA</h1>
+    <img src="../../../assets/Imagen-Login.png" alt="Register Image" class="login-image">
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <label for="UserName"><b>Usuario</b></label>
+      <input id="UserName" type="text" placeholder="Ingresa tu usuario" formControlName="UserName" required>
+
+      <label for="Password"><b>Contraseña</b></label>
+      <input id="Password" type="password" placeholder="Ingresa tu contraseña" formControlName="Password" required>
+
+      <label for="ConfirmPassword"><b>Confirmar Contraseña</b></label>
+      <input id="ConfirmPassword" type="password" placeholder="Confirma tu contraseña" formControlName="ConfirmPassword" required>
+
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+</div>

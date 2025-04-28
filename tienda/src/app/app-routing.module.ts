@@ -6,14 +6,19 @@ import { ProductosComponent } from './components/productos/productos.component';
 import { ProductosALLComponent } from './components/productos-all/productos-all.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
 import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
+import { RegisterComponent } from './components/register/register.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'products', component: ProductosComponent },
   { path: 'productsAll', component: ProductosALLComponent },
   { path: 'proveedores', component: ProveedorComponent },
   { path: 'productsProv', component: ProductosProvComponent },
+  { path: 'perfil', component: PerfilComponent },
+
 ];
 
 @NgModule({

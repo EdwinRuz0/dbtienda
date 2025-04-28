@@ -68,6 +68,6 @@ export class LoginComponent implements OnInit {
   onRegister(): void {
     console.log('Redirigiendo a la página de registro...');
     this.forma.clearValidators();
-    this.router.navigate(['']);
+    this.router.navigate(['/register']);
   }
 }

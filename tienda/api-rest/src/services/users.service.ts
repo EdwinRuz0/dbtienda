@@ -73,6 +73,24 @@ export class UsersService {
       if (updatedUser.Rol) {
         user.Rol = updatedUser.Rol;
       }
+      if (updatedUser.ImagenID !== undefined) {
+        user.ImagenID = updatedUser.ImagenID;
+      }
+      if (updatedUser.CorreoElectronico !== undefined) {
+        user.CorreoElectronico = updatedUser.CorreoElectronico;
+      }
+      if (updatedUser.Direccion !== undefined) {
+        user.Direccion = updatedUser.Direccion;
+      }
+      if (updatedUser.PrimerApellido !== undefined) {
+        user.PrimerApellido = updatedUser.PrimerApellido;
+      }
+      if (updatedUser.SegundoApellido !== undefined) {
+        user.SegundoApellido = updatedUser.SegundoApellido;
+      }
+      if (updatedUser.Telefono !== undefined) {
+        user.Telefono = updatedUser.Telefono;
+      }
       await this.usersRepository.save(user);
       return user;
     }

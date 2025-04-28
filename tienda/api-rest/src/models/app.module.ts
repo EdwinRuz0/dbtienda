@@ -39,13 +39,16 @@ import { TransactionsService } from 'src/services/transactions.service';
 import { Auditoria } from './auditory.model';
 import { AuditoryController } from 'src/controllers/auditory.controller';
 import { AuditoryService } from 'src/services/auditory.service';
+import { ImagesController } from 'src/controllers/images.controller';
+import { ImagesService } from 'src/services/images.service';
+import { Imagen } from './images.model';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones, Auditoria])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones, Auditoria, Imagen])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController, AuditoryController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService, AuditoryService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController, AuditoryController, ImagesController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService, AuditoryService, ImagesService],
 })
 export class AppModule {}

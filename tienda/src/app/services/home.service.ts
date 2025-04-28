@@ -14,4 +14,7 @@ export class HomeService {
   getCategorias(): Observable<Categoria[]> {
     return this.http.get<Categoria[]>(this.apiUrl);
   }
+  agregarCategorias(datos: any): Observable<any> {
+    return this.http.post(this.apiUrl, datos);
+  }
 }

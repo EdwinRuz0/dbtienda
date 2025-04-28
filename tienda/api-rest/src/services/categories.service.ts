@@ -39,6 +39,7 @@ export class CategoriesService {
         id: newCategory.id,
         NombreCategoria: newCategory.NombreCategoria,
         Descripcion: newCategory.Descripcion,
+        ImagenID: newCategory.ImagenID || null,
       });
       await this.categoriesRepository.save(category);
       return category;
@@ -53,6 +54,9 @@ export class CategoriesService {
       }
       if (updatedCategory.Descripcion) {
         categories.Descripcion = updatedCategory.Descripcion;
+      }
+      if (updatedCategory.ImagenID !== undefined) {
+        categories.ImagenID = updatedCategory.ImagenID;
       }
       await this.categoriesRepository.save(categories);
       return categories;

@@ -9,4 +9,6 @@ export class Categorias{
     NombreCategoria: string;
     @Column()
     Descripcion:string;
+    @Column({ nullable: true })
+    ImagenID: number;
 }

@@ -38,11 +38,4 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  irTodosLosProductos() {
-    this.router.navigate(['productsAll']);
-  }
-
-  irTodosLosProductosProveedores() {
-    this.router.navigate(['proveedores']);
-  }
 }

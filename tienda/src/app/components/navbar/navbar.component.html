@@ -1,0 +1,25 @@
+<header>
+  <nav [ngClass]="esAdmin ? 'navbar-admin' : 'navbar-usuario'">
+    <a routerLink="/home" class="logo">Abarrotes La Bendición de Dios</a>
+
+    <ul>
+      <li><a routerLink="/productsAll">Todos Los Productos</a></li>
+      <li><a routerLink="/proveedores">Productos por proveedores</a></li>
+
+      <li class="user-menu" (click)="toggleMenu()">
+        <div class="user-info">
+          <img *ngIf="imagenPerfilBase64" [src]="imagenPerfilBase64" class="user-avatar" alt="Perfil">
+          <span class="user-name">{{ userName || 'Perfil' }}</span>
+          <span class="arrow">&#9662;</span>
+        </div>
+
+        <ul class="dropdown" *ngIf="menuAbierto">
+          <li><a routerLink="/perfil">Perfil</a></li>
+          <li><a routerLink="/carrito">Carrito</a></li>
+          <li><a routerLink="/contacto">Contacto</a></li>
+          <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>

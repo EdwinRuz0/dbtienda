@@ -10,4 +10,16 @@ export class Usuarios{
     Password: string;
     @Column()
     Rol: string
+    @Column({ nullable: true })
+    ImagenID: number;
+    @Column()
+    PrimerApellido: string;
+    @Column()
+    SegundoApellido: string;
+    @Column()
+    Direccion: string;
+    @Column()
+    Telefono: string;
+    @Column()
+    CorreoElectronico: string;
 }
