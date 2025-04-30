@@ -8,23 +8,35 @@ import { Categoria, Productos, Proveedores } from '../models/model';
   providedIn: 'root'
 })
 export class ProductosService {
-  private apiUrl = '/api/producto/categoria/';
-  private apiUrl2 = '/api/producto';
-  private apiUrl3 = '/api/proveedor';
+  private apiProductos = '/api/producto';
   private apiUrl4 = '/api/producto/proveedor/';
+  private apiImagenes = '/api/imagenes';
   constructor(private http: HttpClient, ) {
   }
 
-  getProductos(id: any): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.apiUrl + id);
+  getProductos(): Observable<Productos[]> {
+    return this.http.get<Productos[]>(this.apiProductos);
   }
-  getProductosAll(): Observable<Productos[]> {
-    return this.http.get<Productos[]>(this.apiUrl2);
-  }
-  getProveedores(): Observable<Proveedores[]> {
-    return this.http.get<Proveedores[]>(this.apiUrl3);
+  agregarProductos(datos: any): Observable<any> {
+    return this.http.post(this.apiProductos, datos);
   }
   getProductosProv(id2: any): Observable<Productos[]> {
     return this.http.get<Productos[]>(this.apiUrl4 + id2);
+  }
+
+  enviarDatosImagen(datos: any): Observable<any> {
+    return this.http.post(this.apiImagenes, datos);
+  }
+
+  obtenerImagenPorId(id: number): Observable<any> {
+    return this.http.get(`${this.apiImagenes}/${id}`);
+  }
+
+  actualizarImagen(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiImagenes}/${id}`, datos);
+  }
+
+  eliminarImagen(id: number): Observable<any> {
+    return this.http.delete(`${this.apiImagenes}/${id}`);
   }
 }

@@ -17,5 +17,6 @@ export class Productos{
     CategoriaID: number;
     @Column()
     ProveedorID: number;
-
+    @Column({ nullable: false })
+    ImagenID: number;
 }

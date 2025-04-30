@@ -12,4 +12,6 @@ export class Proveedores{
     ContactoProveedor: string;
     @Column()
     DireccionProveedor: string
+    @Column({ nullable: false })
+    ImagenID: number;
 }

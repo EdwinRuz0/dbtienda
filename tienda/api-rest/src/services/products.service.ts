@@ -41,7 +41,8 @@ export class ProductsService {
         Precio: newProduct.Precio,
         CantidadEnStock: newProduct.CantidadEnStock,
         CategoriaID: newProduct.CategoriaID,
-        ProveedorID: newProduct.ProveedorID
+        ProveedorID: newProduct.ProveedorID,
+        ImagenID: newProduct.ImagenID || null,
       });
       await this.productosRepository.save(products);
       return products;
@@ -68,6 +69,9 @@ export class ProductsService {
       }
       if (updatedProduct.ProveedorID) {
         products.ProveedorID = updatedProduct.ProveedorID;
+      }
+      if (updatedProduct.ImagenID !== undefined) {
+        products.ImagenID = updatedProduct.ImagenID;
       }
       await this.productosRepository.save(products);
       return products;

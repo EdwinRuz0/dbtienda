@@ -1,32 +1,197 @@
-import { Component } from '@angular/core';
-import { Productos } from 'src/app/models/model';
-import { ProductosService } from 'src/app/services/productos.service';
+import { Component, OnInit } from '@angular/core';
+import { Categoria, Productos, Proveedores } from 'src/app/models/model';
+import { HomeService } from 'src/app/services/home.service';
 import { Router } from '@angular/router';
+import { ProductosService } from 'src/app/services/productos.service';
+import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ProveedorService } from 'src/app/services/proveedor.service';
 
 @Component({
   selector: 'app-productos',
   templateUrl: './productos.component.html',
   styleUrls: ['./productos.component.css']
 })
-export class ProductosComponent {
+export class ProductosComponent implements OnInit {
   productos: Productos[] = [];
-  id: string = localStorage.getItem('id')!;
+  productosForm!: FormGroup;
+  imagenProductosBase64: string = '';
+  nombreImagen: string = '';
+  extensionImagen: string = '';
+  modalAbierto: boolean = false;
+  imagenBase64: string = '';
+  productoImageId: number | null = null;
+  cantidadesSugeridas = [1, 5, 10, 20, 50, 100];
+  categorias: Categoria[] = [];
+  categoriaSeleccionada: string = '';
+  proveedores: Proveedores[] = [];
+  proveedorSeleccionado: string = '';
 
-  constructor(private productosService: ProductosService, private router: Router ) {}
-
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private productosService: ProductosService, 
+    private homeService: HomeService,
+    private proveedorService: ProveedorService
+  ) {}
 
   ngOnInit(): void {
-    this.productosService.getProductos(this.id).subscribe(
-      (productos) => {
-        this.productos = productos;
-        // console.log(productos);
+    this.productosForm = this.fb.group({
+      NombreProducto: ['', Validators.required],
+      Descripcion: ['', Validators.required],
+      Precio: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      CantidadEnStock: ['', Validators.required],
+      CategoriaID: ['', Validators.required],
+      ProveedorID: ['', Validators.required]
+    });
+    this.homeService.getCategorias().subscribe((categorias) => {
+      this.categorias = categorias;
+    });
+    this.proveedorService.getProveedores().subscribe((proveedores) => {
+      this.proveedores = proveedores;
+    });
+    this.obtenerProductos();
+  }
+
+  obtenerProductos() {
+    this.productosService.getProductos().subscribe({
+      next: async (productos) => {
+        this.productos = await Promise.all(productos.map(async (prod) => {
+          let imagenBase64 = null;
+          if (prod.ImagenID) {
+            try {
+              const imagen = await this.productosService.obtenerImagenPorId(prod.ImagenID).toPromise();
+              imagenBase64 = imagen.DataBase64 || null;
+            } catch (error) {
+              console.error('Error obteniendo imagen para productos', prod.ProductoID, error);
+            }
+          }
+          return {
+            ...prod,
+            imagenBase64,
+          };
+        }));
       },
-      (error) => {
+      error: (error) => {
         console.error('Error al obtener productos', error);
       }
-    );
+    });
   }
-  irAInicio(): void {
-    this.router.navigate(['home']);
+  
+
+  explorarCategoria(id: number) {
+    
+  }
+
+  abrirModal() {
+    this.modalAbierto = true;
+  }
+
+  cerrarModal() {
+    this.modalAbierto = false;
+    this.imagenBase64 = '';
+    this.productosForm.reset();
+    this.imagenProductosBase64 = '';
+    this.nombreImagen = '';
+    this.extensionImagen = '';
+    this.productoImageId = null;
+  }
+
+  onFileSelected(event: Event) {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagenProductosBase64 = reader.result as string;
+          this.nombreImagen = file.name.split('.')[0] || 'perfil_' + Date.now();
+          this.extensionImagen = file.name.split('.').pop() || 'png';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  
+    async eliminarFoto() {
+      this.imagenProductosBase64 = '';
+      this.nombreImagen = '';
+      this.extensionImagen = '';
+      // if (this.userImageId) {
+      //   await this.perfilService.actualizarUsuario(Number(localStorage.getItem('userId')), { ImagenID: null }).toPromise();
+      //   await this.perfilService.eliminarImagen(this.userImageId).toPromise();
+      //   Swal.fire({
+      //     icon: 'info',
+      //     title: 'Imagen Eliminada',
+      //     text: 'La imagen de perfil ha sido eliminada.',
+      //     confirmButtonColor: '#3498db'
+      //   });
+      // }else {
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Error',
+      //     text: 'No tienes una imagen que eliminar.',
+      //     confirmButtonColor: '#e74c3c'
+      //   });
+      // }
+    }
+
+  async guardarProductos() {
+    if (!this.imagenProductosBase64) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Imagen requerida',
+        text: 'Por favor, selecciona una imagen para el producto.',
+        confirmButtonColor: '#e74c3c'
+      });
+      return;
+    }
+    if (this.productosForm.valid) {
+      if (this.imagenProductosBase64 && this.nombreImagen && this.extensionImagen) {
+        const imagenData = {
+          NombreImagen: this.nombreImagen,
+          Extension: this.extensionImagen,
+          DataBase64: this.imagenProductosBase64,
+          Referencia: 'producto'
+        };
+        const response = await this.productosService.enviarDatosImagen(imagenData).toPromise();
+        this.productoImageId = response.ImagenID;
+      }
+      const nuevoProductoData = {
+        NombreProducto: this.productosForm.value.NombreProducto || null,
+        Descripcion: this.productosForm.value.Descripcion || null,
+        Precio: this.productosForm.value.Precio || null,
+        CantidadEnStock: this.productosForm.value.CantidadEnStock || null,
+        CategoriaID: this.productosForm.value.CategoriaID || null,
+        ProveedorID: this.productosForm.value.ProveedorID || null,
+        ImagenID: this.productoImageId || null
+      };
+      this.productosService.agregarProductos(nuevoProductoData).subscribe(
+        () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto guardado',
+            text: 'Se agregó el producto exitosamente.',
+            confirmButtonColor: '#28a745'
+          });
+          this.obtenerProductos();
+          this.cerrarModal();
+        },
+        (error) => {
+          console.error('Error al guardar producto', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo guardar el producto.',
+            confirmButtonColor: '#e74c3c'
+          });
+        }
+      );
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Por favor, complete todos los campos.',
+        confirmButtonColor: '#e74c3c'
+      });
+    }
   }
 }

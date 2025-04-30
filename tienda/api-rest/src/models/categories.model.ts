@@ -5,10 +5,10 @@ import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from
 export class Categorias{
     @PrimaryGeneratedColumn()
     id: number;
-    @Column()
+    @Column({ nullable: false })
     NombreCategoria: string;
-    @Column()
+    @Column({ nullable: false })
     Descripcion:string;
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     ImagenID: number;
 }

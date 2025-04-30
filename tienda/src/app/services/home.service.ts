@@ -8,6 +8,7 @@ import { Categoria } from '../models/model';
 })
 export class HomeService {
   private apiUrl = '/api/categoria';
+  private apiImagenes = '/api/imagenes';
 
   constructor(private http: HttpClient) {}
 
@@ -17,4 +18,21 @@ export class HomeService {
   agregarCategorias(datos: any): Observable<any> {
     return this.http.post(this.apiUrl, datos);
   }
+
+  enviarDatosImagen(datos: any): Observable<any> {
+    return this.http.post(this.apiImagenes, datos);
+  }
+
+  obtenerImagenPorId(id: number): Observable<any> {
+    return this.http.get(`${this.apiImagenes}/${id}`);
+  }
+
+  actualizarImagen(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiImagenes}/${id}`, datos);
+  }
+
+  eliminarImagen(id: number): Observable<any> {
+    return this.http.delete(`${this.apiImagenes}/${id}`);
+  }
+
 }

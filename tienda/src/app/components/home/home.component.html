@@ -1,27 +1,94 @@
-<!-- home.component.html -->
 <body>
   <main>
-    <div class="container ">
-        <div class="row">
+    <div class="container">
+      <div class="row">
         <section class="featured-products">
-            <h2 class="text-center mb-4">Categorías Disponibles</h2>
-            <div class="row justify-content-center">
-              <div class=" col col-md-3" *ngFor="let categoria of categorias; let i = index">
-                <div class="card shadow mb-4 ml-3">
-                  <img src="../../../assets/Imagen-{{categoria.id}}.jpeg" class="card-img-top" alt="{{categoria.NombreCategoria}}">
-                  <div class="card-body">
-                    <h5 class="card-title">{{categoria.NombreCategoria}}</h5>
-                    <p class="card-text">{{categoria.Descripcion}}</p>
-                    <button class="btn btn-primary" (click)="explorarCategoria(categoria.id)">Explorar</button>
-                  </div>
+
+          <!-- TÍTULO -->
+          <div class="header-line">
+            <h2>Categorías Disponibles</h2>
+          </div>
+
+          <div class="add-button-container">
+            <button class="btn btn-add" (click)="abrirModal()">+ Añadir</button>
+          </div>
+
+          <!-- CATEGORÍAS O MENSAJE -->
+          <div *ngIf="categorias.length > 0; else noCategorias" class="cards-container">
+            <div class="card" *ngFor="let categoria of categorias">
+              <img [src]="categoria.imagenBase64 || '../../../assets/default-category.jpg'" alt="{{categoria.NombreCategoria}}">
+              <div class="card-body">
+                <h5 class="card-title">{{categoria.NombreCategoria}}</h5>
+                <div class="card-text-wrapper">
+                  <p class="card-text">{{categoria.Descripcion}}</p>
+                </div>
+                <button class="btn btn-primary" (click)="explorarCategoria(categoria.id)">Explorar</button>
+              </div>
+            </div>            
+          </div>
+        
+          <!-- SI NO HAY CATEGORÍAS -->
+          <ng-template #noCategorias>
+            <div class="no-categorias">
+              <p class="text-muted fs-4">No hay categorías disponibles.</p>
+            </div>
+          </ng-template>
+        
+        </section>
+        
+        
+      </div>
+    </div>
+
+    <!-- Modal de Agregar Categoría -->
+    <div class="modal" [class.show]="modalAbierto">
+      <div class="modal-content" style="width: 35%;">
+        <button class="close-button" (click)="cerrarModal()">x</button>
+        <h2 class="text-center mb-4">Agregar Categoría</h2>
+        <form [formGroup]="categoriaForm" (ngSubmit)="guardarCategoria()">
+          <div class="modal-body">
+
+            <!-- Columna imagen -->
+            <div class="col-md-4 text-center d-flex flex-column align-items-center">
+              <input type="file" id="input" class="d-none" accept="image/*" (change)="onFileSelected($event)" #photoInput>
+              <div class="mb-3">
+                <img *ngIf="imagenCategoriaBase64" [src]="imagenCategoriaBase64" alt="Foto de categoría"
+                  class="rounded-circle img-thumbnail" style="width: 150px; height: 150px;">
+                <div *ngIf="!imagenCategoriaBase64"
+                  class="rounded-circle img-thumbnail d-flex align-items-center justify-content-center"
+                  style="width: 150px; height: 150px; background-color: #f0f0f0;">
+                  <span class="text-muted">Sin imagen</span>
                 </div>
               </div>
+              <div class="d-flex justify-content-center mt-2">
+                <button type="button" class="btn btn-primary mx-1" (click)="photoInput.click()">Editar</button>
+                <button type="button" class="btn btn-danger mx-1" (click)="eliminarFoto()">Eliminar</button>
+              </div>
             </div>
-          </section>
+
+            <!-- Columna formulario -->
+            <div class="col-md-8 px-4">
+              <div class="form-group mb-3">
+                <label>Nombre de la Categoría:</label>
+                <input type="text" class="form-control" formControlName="NombreCategoria">
+              </div>
+              <div class="form-group mb-3">
+                <label>Descripción:</label>
+                <textarea class="form-control" formControlName="Descripcion" rows="4"></textarea>
+              </div>
+              <div class="text-end mt-3">
+                <button class="btn btn-success" type="submit">Guardar</button>
+              </div>
+            </div>
+
           </div>
+        </form>
+      </div>
     </div>
+
+
   </main>
-  
+
   <footer>
     <p class="text-center">&copy; 2023 Abarrotes La Bendición de Dios</p>
   </footer>

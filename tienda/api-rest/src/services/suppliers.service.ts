@@ -38,7 +38,8 @@ export class SuppliersService {
         ProveedorID: newSupplier.ProveedorID,
         NombreProveedor: newSupplier.NombreProveedor,
         ContactoProveedor: newSupplier.ContactoProveedor,
-        DireccionProveedor: newSupplier.DireccionProveedor
+        DireccionProveedor: newSupplier.DireccionProveedor,
+        ImagenID: newSupplier.ImagenID || null,
       });
       await this.proveedoresRepository.save(suppliers);
       return suppliers;
@@ -56,6 +57,9 @@ export class SuppliersService {
       }
       if (updatedSupplier.DireccionProveedor) {
         suppliers.DireccionProveedor = updatedSupplier.DireccionProveedor;
+      }
+      if (updatedSupplier.ImagenID !== undefined) {
+        suppliers.ImagenID = updatedSupplier.ImagenID;
       }
       await this.proveedoresRepository.save(suppliers);
       return suppliers;

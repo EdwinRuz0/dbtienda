@@ -3,6 +3,8 @@ export interface Categoria {
     id: number;
     NombreCategoria: string;
     Descripcion: string;
+    ImagenID: number;
+    imagenBase64?: string;
 }
 export interface Productos{
     ProductoID: number;
@@ -12,6 +14,8 @@ export interface Productos{
     CantidadEnStock: number;
     CategoriaID: number;
     ProveedorID: number;
+    ImagenID: number;
+    imagenBase64?: string;
 }
 export interface Usuario{
     username: string;
@@ -26,6 +30,8 @@ export interface Proveedores{
     NombreProveedor: string;
     ContactoProveedor: string;
     DireccionProveedor: string;
+    ImagenID: number;
+    imagenBase64?: string;
 }
 export class Encuesta {
     id!: number;

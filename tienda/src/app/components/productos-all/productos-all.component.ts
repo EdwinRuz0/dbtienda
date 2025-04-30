@@ -13,17 +13,5 @@ export class ProductosALLComponent {
   constructor(private productosService: ProductosService, private router: Router ) {}
 
   ngOnInit(): void {
-    this.productosService.getProductosAll().subscribe(
-      (productos) => {
-        this.productos = productos;
-        // console.log(productos);
-      },
-      (error) => {
-        console.error('Error al obtener productos', error);
-      }
-    );
-  }
-  irAInicio(): void {
-    this.router.navigate(['home']);
   }
 }
