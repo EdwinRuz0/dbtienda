@@ -14,6 +14,8 @@ import { ProveedorService } from 'src/app/services/proveedor.service';
 })
 export class ProveedorComponent implements OnInit {
   provedores: Proveedores[] = [];
+  todosLosProveedores: Proveedores[] = []; // ← COPIA ORIGINAL PARA FILTRAR
+  rolUsuario: string = '';
   provedorForm!: FormGroup;
   imagenProveedorBase64: string = '';
   nombreImagen: string = '';
@@ -21,6 +23,12 @@ export class ProveedorComponent implements OnInit {
   modalAbierto: boolean = false;
   imagenBase64: string = '';
   proveedorImageId: number | null = null;
+  mostrarFiltros = false;
+  filtrosDisponibles = [
+    'Nombre'
+  ];
+  filtroSeleccionado: string = ''; 
+  textoBusqueda: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +38,7 @@ export class ProveedorComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.rolUsuario = localStorage.getItem('userRole') || '';
     this.provedorForm = this.fb.group({
       NombreProveedor: ['', Validators.required],
       ContactoProveedor: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
@@ -63,6 +72,7 @@ export class ProveedorComponent implements OnInit {
             imagenBase64,
           };
         }));
+        this.todosLosProveedores = [...this.provedores]; 
       },
       error: (error) => {
         console.error('Error al obtener proveedores', error);
@@ -70,12 +80,64 @@ export class ProveedorComponent implements OnInit {
     });
   }
   
-
-  explorarCategoria(id: number) {
-    
+  seleccionarFiltro(filtro: string) {
+    this.filtroSeleccionado = filtro;
+    this.mostrarFiltros = false;
+    this.ordenarProveedores();
   }
 
+  ordenarProveedores() {
+    if (!this.filtroSeleccionado || this.provedores.length === 0) return;
+  
+    const clave = this.filtroSeleccionado.toLowerCase();
+  
+    this.provedores.sort((a: any, b: any) => {
+      if (clave === 'nombre') {
+        return a.NombreProveedor.localeCompare(b.NombreProveedor);
+      }
+      return 0;
+    });
+  }
+
+  cerrarBusqueda() {
+    this.filtroSeleccionado = '';
+    this.textoBusqueda = '';
+    this.mostrarFiltros = false;
+    this.provedores = [...this.todosLosProveedores];
+  }
+  
+  toggleFiltros() {
+    this.mostrarFiltros = !this.mostrarFiltros;
+  }
+  
+  buscar() {
+    if (!this.filtroSeleccionado) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Selecciona un filtro',
+        text: 'Por favor, selecciona un tipo de filtro antes de buscar.',
+        confirmButtonColor: '#3498db'
+      });
+      return;
+    }
+    if (this.textoBusqueda.trim() === '') {return}
+    console.log(`Buscando "${this.textoBusqueda}" por "${this.filtroSeleccionado}"`);
+    const texto = this.textoBusqueda.toLowerCase();
+    const clave = this.filtroSeleccionado.toLowerCase();
+    this.provedores = this.todosLosProveedores.filter((provedor: any) => {
+    if (clave === 'nombre') {
+      return provedor.NombreProveedor?.toLowerCase().includes(texto);
+    }
+    return false;
+    });
+  }
+
+  explorarProveedor(proveedorId: number) {
+    this.router.navigate(['/productsAll'], { queryParams: { proveedorId } });
+  }
+  
   abrirModal() {
+    if (this.rolUsuario !== 'administrador') return;
     this.modalAbierto = true;
   }
 

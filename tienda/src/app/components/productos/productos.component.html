@@ -10,21 +10,62 @@
           </div>
 
           <div class="add-button-container">
-            <button class="btn btn-add" (click)="abrirModal()">+ Añadir</button>
+            <div class="busqueda-grupo">
+              <!-- Botón filtro + dropdown -->
+              <div class="filtro-wrapper">
+                <button class="btn btn-filtro" (click)="toggleFiltros()">
+                  <span class="contenido-filtro">
+                    <img src="../../../assets/filtro-icon.png" class="icono-filtro" alt="icono filtro">
+                    <span>{{ filtroSeleccionado || 'FILTROS'}}</span>
+                  </span>
+                </button>
+          
+                <!-- Dropdown -->
+                <div class="dropdown-filtros-grid" *ngIf="mostrarFiltros">
+                  <div class="filtro-opcion" *ngFor="let filtro of filtrosDisponibles" (click)="seleccionarFiltro(filtro)">
+                    {{ filtro }}
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Barra de búsqueda -->
+              <div class="barra-busqueda" *ngIf="mostrarFiltros || filtroSeleccionado">
+                <input type="text" class="input-busqueda" placeholder="Introduzca el texto a buscar" [(ngModel)]="textoBusqueda">
+                <button class="btn-icono" (click)="buscar()">
+                  <img src="../../../assets/lupa-icon.png" alt="Buscar">
+                </button>
+                <button class="btn-icono" (click)="cerrarBusqueda()">
+                  <img src="../../../assets/filtro-icon.png" alt="Cerrar">
+                </button>
+              </div>
+            </div>
+          
+            <!-- Botón de añadir -->
+            <button class="btn btn-add" *ngIf="rolUsuario === 'administrador'" (click)="abrirModal()">+ AÑADIR</button>
           </div>
-
+          
           <!-- PRODUCTOS O MENSAJE -->
           <div *ngIf="productos.length > 0; else noProductos" class="cards-container">
-            <div class="card" *ngFor="let producto of productos">
+            <div class="card" *ngFor="let producto of productos" (mouseenter)="producto.hover = true" (mouseleave)="producto.hover = false">
               <img [src]="producto.imagenBase64" alt="{{producto.NombreProducto}}">
               <div class="card-body">
                 <h5 class="card-title">{{producto.NombreProducto}}</h5>
                 <div class="card-text-wrapper">
                   <p class="card-text">{{producto.Descripcion}}</p>
                 </div>
-                <button class="btn btn-primary" (click)="explorarCategoria(producto.ProductoID)">Explorar</button>
+                <div class="botones-card">
+                  <button class="btn btn-primary">Agregar al carrito</button>
+                  <button class="btn btn-primary">Comprar ahora</button>
+                </div>
               </div>
-            </div>            
+              <!-- Mini Card con más detalles -->
+              <div class="info-hover-card" *ngIf="producto.hover">
+                <p><strong>Precio:</strong> ${{ producto.Precio }}</p>
+                <p><strong>En Stock:</strong> {{ producto.CantidadEnStock }}</p>
+                <p><strong>Categoría:</strong> {{ producto.CategoriaNombre  || '—' }}</p>
+                <p><strong>Proveedor:</strong> {{ producto.NombreProveedor || '—' }}</p>
+              </div>
+            </div>       
           </div>
         
           <!-- SI NO HAY PRODUCTOS -->
@@ -42,7 +83,7 @@
 
     <!-- Modal de Agregar Productos -->
     <div class="modal" [class.show]="modalAbierto">
-      <div class="modal-content" style="width: 45%;">
+      <div class="modal-content" style="width: 55%;">
         <button class="close-button" (click)="cerrarModal()">x</button>
         <h2 class="text-center mb-4">Agregar producto</h2>
         <form [formGroup]="productosForm" (ngSubmit)="guardarProductos()">

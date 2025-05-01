@@ -295,6 +295,22 @@ footer {
   align-items: center;
   cursor: pointer;
 }
+.no-categorias {
+  width: 100%;
+  margin-top: 70px; /* <- este es el que baja el mensaje */
+  text-align: center;
+}
+.swal2-container {
+  z-index: 1100 !important;
+}
+.add-button-container {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+  justify-content: space-between;
+}
+
 .btn-add {
   background-color: #CCE32F;
   border: none;
@@ -305,17 +321,104 @@ footer {
   color: #1F568A;
   transition: background-color 0.3s;
 }
-.no-categorias {
-  width: 100%;
-  margin-top: 70px; /* <- este es el que baja el mensaje */
-  text-align: center;
+.btn-filtro {
+  background-color: #CCE32F;
+  border:#546270;
+  background-color: transparent;
+  border-radius: 5px;
+  padding: 6px 16px;
+  font: 11px "Open Sans", Roboto, sans-serif;
+  font-size: 16px;
+  color: #1F568A;
+  transition: background-color 0.3s;
 }
-.swal2-container {
-  z-index: 1100 !important;
+.btn-filtro:hover {
+  background-color: #f2f2f2;
 }
-.add-button-container {
-  width: 100%;
-  text-align: right;
-  margin-bottom: 30px;
-  justify-content: right;
+.contenido-filtro {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* <-- este es el espacio entre ícono y texto */
+}
+
+.btn-filtro:hover {
+  background-color: #f2f2f2;
+}
+
+.icono-filtro {
+  width: 25px;
+  height: 25px;
+}
+.filtro-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-filtros-grid {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  display: grid;
+  grid-template-columns: repeat(1, auto);
+  min-width: 133px;
+}
+
+.filtro-opcion {
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  font-size: 15px;
+}
+
+.filtro-opcion:hover {
+  background-color: #f2f2f2;
+}
+.barra-busqueda {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  margin-left: 8px;
+}
+
+.filtro-select {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.input-busqueda {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 250px;
+  font-size: 14px;
+}
+
+.btn-icono {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 5px;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.btn-icono img {
+  width: 20px;
+  height: 20px;
+}
+
+.busqueda-grupo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

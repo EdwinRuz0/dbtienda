@@ -14,12 +14,20 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   categoriaForm!: FormGroup;
   categorias: Categoria[] = [];
+  todosLasCategorias: Categoria[] = []; // ← COPIA ORIGINAL PARA FILTRAR
+  rolUsuario: string = '';
   imagenCategoriaBase64: string = '';
   nombreImagen: string = '';
   extensionImagen: string = '';
   modalAbierto: boolean = false;
   imagenBase64: string = '';
   categoriaImageId: number | null = null;
+  mostrarFiltros = false;
+  filtrosDisponibles = [
+    'Nombre'
+  ];
+  filtroSeleccionado: string = ''; 
+  textoBusqueda: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +37,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.rolUsuario = localStorage.getItem('userRole') || '';
     this.categoriaForm = this.fb.group({
       NombreCategoria: ['', Validators.required],
       Descripcion: ['', Validators.required]
@@ -54,6 +63,7 @@ export class HomeComponent implements OnInit {
             imagenBase64,
           };
         }));
+        this.todosLasCategorias = [...this.categorias]; 
       },
       error: (error) => {
         console.error('Error al obtener categorías', error);
@@ -61,12 +71,66 @@ export class HomeComponent implements OnInit {
     });
   }
   
-
-  explorarCategoria(id: number) {
-    
+  
+  seleccionarFiltro(filtro: string) {
+    this.filtroSeleccionado = filtro;
+    this.mostrarFiltros = false;
+    this.ordenarCategorias();
   }
 
+  ordenarCategorias() {
+    if (!this.filtroSeleccionado || this.categorias.length === 0) return;
+  
+    const clave = this.filtroSeleccionado.toLowerCase();
+  
+    this.categorias.sort((a: any, b: any) => {
+      if (clave === 'nombre') {
+        return a.NombreCategoria.localeCompare(b.NombreCategoria);
+      }
+      return 0;
+    });
+  }
+
+  cerrarBusqueda() {
+    this.filtroSeleccionado = '';
+    this.textoBusqueda = '';
+    this.mostrarFiltros = false;
+    this.categorias = [...this.todosLasCategorias];
+  }
+  
+  toggleFiltros() {
+    this.mostrarFiltros = !this.mostrarFiltros;
+  }
+  
+  buscar() {
+    if (!this.filtroSeleccionado) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Selecciona un filtro',
+        text: 'Por favor, selecciona un tipo de filtro antes de buscar.',
+        confirmButtonColor: '#3498db'
+      });
+      return;
+    }
+    if (this.textoBusqueda.trim() === '') {return}
+    console.log(`Buscando "${this.textoBusqueda}" por "${this.filtroSeleccionado}"`);
+    const texto = this.textoBusqueda.toLowerCase();
+    const clave = this.filtroSeleccionado.toLowerCase();
+    this.categorias = this.todosLasCategorias.filter((categoria: any) => {
+    if (clave === 'nombre') {
+      return categoria.NombreCategoria?.toLowerCase().includes(texto);
+    }
+    return false;
+    });
+  }
+
+  explorarCategoria(idCategoria: number) {
+    this.router.navigate(['/productsAll'], { queryParams: { categoriaId: idCategoria } });
+  }
+  
+
   abrirModal() {
+    if (this.rolUsuario !== 'administrador') return;
     this.modalAbierto = true;
   }
 

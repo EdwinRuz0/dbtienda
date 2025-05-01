@@ -16,6 +16,9 @@ export interface Productos{
     ProveedorID: number;
     ImagenID: number;
     imagenBase64?: string;
+    hover: boolean;
+    CategoriaNombre?: string;
+    NombreProveedor?: string;
 }
 export interface Usuario{
     username: string;

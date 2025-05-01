@@ -10,7 +10,38 @@
           </div>
 
           <div class="add-button-container">
-            <button class="btn btn-add" (click)="abrirModal()">+ Añadir</button>
+            <div class="busqueda-grupo">
+              <!-- Botón filtro + dropdown -->
+              <div class="filtro-wrapper">
+                <button class="btn btn-filtro" (click)="toggleFiltros()">
+                  <span class="contenido-filtro">
+                    <img src="../../../assets/filtro-icon.png" class="icono-filtro" alt="icono filtro">
+                    <span>{{ filtroSeleccionado || 'FILTROS'}}</span>
+                  </span>
+                </button>
+          
+                <!-- Dropdown -->
+                <div class="dropdown-filtros-grid" *ngIf="mostrarFiltros">
+                  <div class="filtro-opcion" *ngFor="let filtro of filtrosDisponibles" (click)="seleccionarFiltro(filtro)">
+                    {{ filtro }}
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Barra de búsqueda -->
+              <div class="barra-busqueda" *ngIf="mostrarFiltros || filtroSeleccionado">
+                <input type="text" class="input-busqueda" placeholder="Introduzca el texto a buscar" [(ngModel)]="textoBusqueda">
+                <button class="btn-icono" (click)="buscar()">
+                  <img src="../../../assets/lupa-icon.png" alt="Buscar">
+                </button>
+                <button class="btn-icono" (click)="cerrarBusqueda()">
+                  <img src="../../../assets/filtro-icon.png" alt="Cerrar">
+                </button>
+              </div>
+            </div>
+          
+            <!-- Botón de añadir -->
+            <button class="btn btn-add" *ngIf="rolUsuario === 'administrador'" (click)="abrirModal()">+ AÑADIR</button>
           </div>
 
           <!-- PROVEEDORES O MENSAJE -->
@@ -23,7 +54,7 @@
                   <p class="card-text">{{ proveedor.ContactoProveedor }}</p>
                   <p class="card-text">{{ proveedor.DireccionProveedor }}</p>
                 </div>
-                <button class="btn btn-primary" (click)="explorarCategoria(proveedor.ProveedorID)">Explorar</button>
+                <button class="btn btn-primary" (click)="explorarProveedor(proveedor.ProveedorID)">Explorar</button>
               </div>
             </div>            
           </div>

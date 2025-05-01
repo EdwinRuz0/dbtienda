@@ -8,12 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { ProductosComponent } from './components/productos/productos.component';
-import { ProductosALLComponent } from './components/productos-all/productos-all.component';
-import { ProductosProvComponent } from './components/productos-prov/productos-prov.component';
 import { ProveedorComponent } from './components/proveedor/proveedor.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +20,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginComponent,
     HomeComponent,
     ProductosComponent,
-    ProductosALLComponent,
-    ProductosProvComponent,
     ProveedorComponent,
     RegisterComponent,
     PerfilComponent,
-    NavbarComponent
+    NavbarComponent,
+    CarritoComponent
   ],
   imports: [
     BrowserModule,

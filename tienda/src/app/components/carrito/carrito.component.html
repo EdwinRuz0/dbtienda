@@ -1,0 +1,46 @@
+<div class="carrito-container">
+    <!-- Columna izquierda: Mi carrito -->
+    <div class="carrito-productos">
+      <h2>Mi carrito</h2>
+      <hr />
+      <div class="producto">
+        <img src="../../../assets/paquete-mes.jpg" alt="Producto" />
+        <div class="detalle">
+          <p class="nombre">Paquete del mes</p>
+          <p class="precio-unitario">$1,000.00</p>
+        </div>
+        <div class="cantidad">
+          <button>-</button>
+          <input type="number" [value]="1" min="1" />
+          <button>+</button>
+        </div>
+        <p class="precio-total">$1,000.00</p>
+        <button class="eliminar">×</button>
+      </div>
+      <hr />
+      <div class="acciones">
+        <a href="#">🏷️ Ingresar código promocional</a>
+        <a href="#">📝 Agregar una nota</a>
+      </div>
+    </div>
+  
+    <!-- Columna derecha: Resumen del pedido -->
+    <div class="resumen-pedido">
+      <h2>Resumen del pedido</h2>
+      <div class="linea">
+        <span>Subtotal</span>
+        <span>$1,000.00</span>
+      </div>
+      <div class="linea">
+        <a href="#">Calcular envío</a>
+      </div>
+      <hr />
+      <div class="linea total">
+        <strong>Total</strong>
+        <strong>$1,000.00</strong>
+      </div>
+      <button class="btn-finalizar">Finalizar compra</button>
+      <p class="pago-seguro">🔒 Pago seguro</p>
+    </div>
+  </div>
+  
