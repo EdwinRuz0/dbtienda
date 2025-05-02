@@ -63,3 +63,19 @@ export interface PerfilImagen{
     extension:string;
     data:string;
 }
+export interface CarritoTemporal{
+    CarritoID: number;
+    UsuarioID: number;
+    ProductoID: number;
+    Cantidad: number;
+    FechaAgregado: Date;
+    ImagenID: number;
+    imagenBase64?: string;
+}
+export interface CarritoConDetalles extends CarritoTemporal {
+    NombreProducto: string;
+    PrecioUnitario: number;
+    ImagenBase64: string;
+    Subtotal: number;
+}
+  

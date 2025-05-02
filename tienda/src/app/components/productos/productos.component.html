@@ -54,7 +54,7 @@
                   <p class="card-text">{{producto.Descripcion}}</p>
                 </div>
                 <div class="botones-card">
-                  <button class="btn btn-primary">Agregar al carrito</button>
+                  <button class="btn btn-primary" (click)="agregarAlCarrito(producto.ProductoID)">Agregar al carrito</button>
                   <button class="btn btn-primary">Comprar ahora</button>
                 </div>
               </div>

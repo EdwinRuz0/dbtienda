@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { ActivatedRoute } from '@angular/router';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-productos',
@@ -17,6 +18,7 @@ export class ProductosComponent implements OnInit {
   productos: Productos[] = [];
   todosLosProductos: Productos[] = []; // ← COPIA ORIGINAL PARA FILTRAR
   rolUsuario: string = '';
+  userId: number = 0;
   productosForm!: FormGroup;
   imagenProductosBase64: string = '';
   nombreImagen: string = '';
@@ -45,11 +47,13 @@ export class ProductosComponent implements OnInit {
     private route: ActivatedRoute,
     private productosService: ProductosService, 
     private homeService: HomeService,
-    private proveedorService: ProveedorService
+    private proveedorService: ProveedorService,
+    private cartService: CartService,
   ) {}
 
   ngOnInit(): void {
     this.rolUsuario = localStorage.getItem('userRole') || '';
+    this.userId = Number(localStorage.getItem('userId')) || 0;
     this.productosForm = this.fb.group({
       NombreProducto: ['', Validators.required],
       Descripcion: ['', Validators.required],
@@ -122,9 +126,7 @@ export class ProductosComponent implements OnInit {
 
   ordenarProductos() {
     if (!this.filtroSeleccionado || this.productos.length === 0) return;
-  
     const clave = this.filtroSeleccionado.toLowerCase();
-  
     this.productos.sort((a: any, b: any) => {
       if (clave === 'nombre') {
         return a.NombreProducto.localeCompare(b.NombreProducto);
@@ -179,10 +181,46 @@ export class ProductosComponent implements OnInit {
     });
   }
   
-  explorarCategoria(id: number) {
-    
+  agregarAlCarrito(ProductoID: number) {
+    this.cartService.getCarritoUsuarioId(this.userId).subscribe(carritoUsuario => {
+      const productoExistente = Array.isArray(carritoUsuario) ? carritoUsuario.find(p => p.ProductoID === ProductoID)
+        : (carritoUsuario?.ProductoID === ProductoID ? carritoUsuario : null);
+  
+      if (productoExistente) {
+        const nuevoDato = {
+          ...productoExistente,
+          Cantidad: productoExistente.Cantidad + 1
+        };
+        this.cartService.actualizarCarrito(productoExistente.CarritoID, nuevoDato).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto agregado',
+            text: 'Se agregó el producto al carrito.',
+            confirmButtonColor: '#28a745'
+          });
+        });
+      } else {
+        const nuevoCarrito = {
+          UsuarioID: this.userId,
+          ProductoID: ProductoID,
+          Cantidad: 1,
+          FechaAgregado: new Date()
+        };
+        this.cartService.agregarCarrito(nuevoCarrito).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto agregado',
+            text: 'Se agregó el producto al carrito.',
+            confirmButtonColor: '#28a745'
+          });
+        });
+      }
+    },
+    error => {
+      console.error('Error verificando el carrito', error);
+    });
   }
-
+  
   abrirModal() {
     if (this.rolUsuario !== 'administrador') return;
     this.modalAbierto = true;

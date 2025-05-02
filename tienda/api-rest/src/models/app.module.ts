@@ -42,13 +42,16 @@ import { AuditoryService } from 'src/services/auditory.service';
 import { ImagesController } from 'src/controllers/images.controller';
 import { ImagesService } from 'src/services/images.service';
 import { Imagen } from './images.model';
+import { CarritoTemporal } from './temporaryCart.model';
+import { TemporaryCartController } from 'src/controllers/temporaryCart.controller';
+import { TemporaryCartService } from 'src/services/temporaryCart.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({useClass: TypeormService}),
-    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones, Auditoria, Imagen])
+    TypeOrmModule.forFeature([Usuarios, Categorias, Proveedores, Productos, Clientes, Ventas, DetallesVenta, Empleados, Compras, DetallesCompra, Transacciones, Auditoria, Imagen, CarritoTemporal])
   ],
-  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController, AuditoryController, ImagesController],
-  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService, AuditoryService, ImagesService],
+  controllers: [AppController, UsersController, CategoriesController, SuppliersController, ProductsController, CustomersController, SalesController, DetailsSalesController, EmployeesController, PurchasesController, PurchasesDetailsController, TransactionsController, AuditoryController, ImagesController, TemporaryCartController],
+  providers: [AppService, TypeormService, UsersService, CategoriesService, SuppliersService, ProductsService, CustomersService, SalesService, DetailsSalesService, EmployeesService, PurchasesService, PurchasesDetailsService, TransactionsService, AuditoryService, ImagesService, TemporaryCartService],
 })
 export class AppModule {}

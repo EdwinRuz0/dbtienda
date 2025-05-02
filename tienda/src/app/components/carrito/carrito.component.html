@@ -1,46 +1,113 @@
 <div class="carrito-container">
-    <!-- Columna izquierda: Mi carrito -->
-    <div class="carrito-productos">
-      <h2>Mi carrito</h2>
-      <hr />
-      <div class="producto">
-        <img src="../../../assets/paquete-mes.jpg" alt="Producto" />
-        <div class="detalle">
-          <p class="nombre">Paquete del mes</p>
-          <p class="precio-unitario">$1,000.00</p>
+  <!-- Columna izquierda: Mi carrito -->
+  <div class="carrito-productos">
+    <h2>Mi carrito</h2>
+    <hr />
+    
+    <!-- Lista de productos -->
+    <div *ngIf="carrito.length > 0; else sinProductos">
+      <ng-container *ngFor="let item of carrito; let i = index">
+        <div class="producto">
+          <img [src]="item.ImagenBase64" alt="Producto" />
+          <div class="detalle">
+            <p class="nombre">{{ item.NombreProducto }}</p>
+            <p class="precio-unitario">${{ item.PrecioUnitario.toFixed(2) }}</p>
+          </div>
+          <div class="cantidad">
+            <button (click)="cambiarCantidad(item, -1)">-</button>
+            <input type="number" [value]="item.Cantidad" min="1" readonly />
+            <button (click)="cambiarCantidad(item, 1)">+</button>
+          </div>
+          <p class="precio-total">${{ item.Subtotal.toFixed(2) }}</p>
+          <button class="eliminar" (click)="eliminarDelCarrito(item)">×</button>
         </div>
-        <div class="cantidad">
-          <button>-</button>
-          <input type="number" [value]="1" min="1" />
-          <button>+</button>
-        </div>
-        <p class="precio-total">$1,000.00</p>
-        <button class="eliminar">×</button>
-      </div>
-      <hr />
-      <div class="acciones">
-        <a href="#">🏷️ Ingresar código promocional</a>
-        <a href="#">📝 Agregar una nota</a>
-      </div>
+        <hr *ngIf="i < carrito.length - 1" />
+      </ng-container>
     </div>
-  
-    <!-- Columna derecha: Resumen del pedido -->
-    <div class="resumen-pedido">
-      <h2>Resumen del pedido</h2>
-      <div class="linea">
-        <span>Subtotal</span>
-        <span>$1,000.00</span>
-      </div>
-      <div class="linea">
-        <a href="#">Calcular envío</a>
-      </div>
-      <hr />
-      <div class="linea total">
-        <strong>Total</strong>
-        <strong>$1,000.00</strong>
-      </div>
-      <button class="btn-finalizar">Finalizar compra</button>
-      <p class="pago-seguro">🔒 Pago seguro</p>
+    
+
+    <!-- Mensaje si no hay productos -->
+    <ng-template #sinProductos>
+      <p class="mensaje-vacio">🛒 No hay productos en tu carrito.</p>
+    </ng-template>
+
+
+    <hr />
+    <div class="acciones">
+      <a href="#">🏷️ Ingresar código promocional</a> <!-- PARA EL FINAL(OPCIONAL), TENGO QUE CREAR EL COMPONENTE PARA ADMIN Y USER Y LA LOGICA -->
     </div>
   </div>
-  
+
+  <!-- Columna derecha: Resumen del pedido -->
+  <div class="resumen-pedido">
+    <h2>Resumen del pedido</h2>
+    <div class="linea">
+      <span>Subtotal</span>
+      <span>${{ calcularTotal().toFixed(2) }}</span>
+    </div>
+    <div class="linea">
+      <span>Descuento</span>
+      <span>$0.00</span> <!-- AJUSTAR CON EL CODIGO PROMOCIONAL-->
+    </div>
+    <hr />
+    <div class="linea total">
+      <strong>Total</strong>
+      <strong>${{ calcularTotal().toFixed(2) }}</strong>
+    </div>
+    <button class="btn-finalizar" (click)="abrirModalPago()">Finalizar compra</button>
+    <p class="pago-seguro">🔒 Pago seguro</p>
+  </div>
+
+  <!-- Modal de pago -->
+  <div class="modal" [class.show]="mostrarModalPago">
+    <div class="modal-content pago-modal">
+      <div class="modal-body">
+        <!-- Columna izquierda: formulario -->
+        <div class="formulario-pago">
+
+          <form [formGroup]="formPago" (ngSubmit)="finalizarCompra()" class="form-pago">
+            <label for="tarjeta">Número de tarjeta</label>
+            <input id="tarjeta" type="text" formControlName="tarjeta" placeholder="•••• •••• •••• ••••" />
+
+            <label for="titular">Nombre y apellido</label>
+            <input id="titular" type="text" formControlName="titular" placeholder="Como figura en la tarjeta" />
+
+            <div class="fila">
+              <div class="columna">
+                <label for="fecha">Fecha de vencimiento</label>
+                <input id="fecha" type="text" formControlName="fecha" placeholder="MM/AA" />
+              </div>
+              <div class="columna">
+                <label for="cvv">Código de seguridad</label>
+                <input id="cvv" type="text" formControlName="cvv" placeholder="CVV" />
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Columna derecha: resumen -->
+        <div class="resumen-modal">
+          <h3>Resumen de compra</h3>
+          <div class="linea">
+            <span>Productos ({{ carrito.length }})</span>
+            <span>${{ calcularTotal().toFixed(2) }}</span>
+          </div>
+          <div class="linea">
+            <span>Descuento</span>
+            <span>$0.00</span> <!-- AJUSTAR CON EL CODIGO PROMOCIONAL-->
+          </div>
+          <hr />
+          <div class="linea total">
+            <strong>Pagas</strong>
+            <strong>${{ calcularTotal().toFixed(2) }}</strong>
+          </div>
+          <div class="botones-modal">
+            <button type="submit" class="btn-continuar" (click)="finalizarCompra()">Pagar</button>
+            <button type="button" class="btn-cancelar" (click)="cerrarModal()">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
