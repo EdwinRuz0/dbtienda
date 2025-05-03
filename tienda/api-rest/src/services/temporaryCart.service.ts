@@ -41,4 +41,7 @@ export class TemporaryCartService {
     }
     await this.temporaryCartRepository.remove(cart);   
   }
+  async deleteAllCartByUser(UsuarioID: number): Promise<void> {
+    await this.temporaryCartRepository.delete({ UsuarioID: UsuarioID });
+  }
 }

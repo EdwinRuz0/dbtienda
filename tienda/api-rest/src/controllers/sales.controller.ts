@@ -15,6 +15,10 @@ constructor(private readonly ventasService: SalesService) {}
     const sales = await this.ventasService.getSalesDataId(id);
     return sales;
   }
+  @Get('/api/venta/user/:id')
+  async getSalesDataByUserId(@Param('id') id: number) { 
+    return await this.ventasService.getSalesDataByUserId(id);
+  }
   @Delete('/api/venta/:id') //borrar las ventas con el id
   async deleteSalesId(@Param('id') id: number) {
     await this.ventasService.deleteSalesId(id);
@@ -23,7 +27,7 @@ constructor(private readonly ventasService: SalesService) {}
   @Post('/api/venta') //anadir nuevas ventas
   async registerNewSales(@Body() newSales : Ventas) {
     const sales = await this.ventasService.createNewSales(newSales);
-    return { message: 'Ventas agregado con éxito' };
+    return sales;
   }
   @Put('/api/venta/:id') //buscar a la venta por el id y luego actualizar el dato de una venta
   async updateSalesData(@Param('id') id: number, @Body() updatedSalesData: Ventas) {

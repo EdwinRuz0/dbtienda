@@ -40,7 +40,8 @@ export class PurchasesDetailsService {
         ProductoID: newPurchasesDetails.ProductoID,
         CantidadComprada: newPurchasesDetails.CantidadComprada,
         PrecioUnitario: newPurchasesDetails.PrecioUnitario,
-        Subtotal: newPurchasesDetails.Subtotal
+        Subtotal: newPurchasesDetails.Subtotal,
+        FechaDetalle: newPurchasesDetails.FechaDetalle,
       });
       await this.detallesComprasRepository.save(purchasesDetails);
       return purchasesDetails;
@@ -64,6 +65,9 @@ export class PurchasesDetailsService {
       }
       if (updatedPurchasesDetails.Subtotal) {
         purchasesDetails.Subtotal = updatedPurchasesDetails.Subtotal;
+      }
+      if (updatedPurchasesDetails.FechaDetalle) {
+        purchasesDetails.FechaDetalle = updatedPurchasesDetails.FechaDetalle;
       }
       await this.detallesComprasRepository.save(purchasesDetails);
       return purchasesDetails;

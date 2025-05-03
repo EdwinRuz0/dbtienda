@@ -18,7 +18,12 @@ export class HomeService {
   agregarCategorias(datos: any): Observable<any> {
     return this.http.post(this.apiUrl, datos);
   }
-
+  actualizarCategorias(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, datos);
+  }
+  eliminarCategorias(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
   enviarDatosImagen(datos: any): Observable<any> {
     return this.http.post(this.apiImagenes, datos);
   }

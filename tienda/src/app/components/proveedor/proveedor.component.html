@@ -46,7 +46,7 @@
 
           <!-- PROVEEDORES O MENSAJE -->
           <div *ngIf="provedores.length > 0; else noProveedores" class="cards-container">
-            <div class="card" *ngFor="let proveedor of provedores">
+            <div class="card" *ngFor="let proveedor of provedores" [ngStyle]="{ height: esAdmin ? '390px' : '350px' }">
               <img [src]="proveedor.imagenBase64" alt="{{proveedor.NombreProveedor}}">
               <div class="card-body">
                 <h5 class="card-title">{{proveedor.NombreProveedor}}</h5>
@@ -54,7 +54,13 @@
                   <p class="card-text">{{ proveedor.ContactoProveedor }}</p>
                   <p class="card-text">{{ proveedor.DireccionProveedor }}</p>
                 </div>
-                <button class="btn btn-primary" (click)="explorarProveedor(proveedor.ProveedorID)">Explorar</button>
+                <ng-container *ngIf="esAdmin; else soloExplorar">
+                  <button class="btn btn-warning" (click)="abrirModal(proveedor)">Editar</button>
+                  <button class="btn btn-danger" (click)="eliminarProveedor(proveedor)">Eliminar</button>
+                </ng-container>
+                <ng-template #soloExplorar>
+                  <button class="btn btn-primary" (click)="explorarProveedor(proveedor.ProveedorID)">Explorar</button>
+                </ng-template>
               </div>
             </div>            
           </div>
@@ -76,7 +82,7 @@
     <div class="modal" [class.show]="modalAbierto">
       <div class="modal-content" style="width: 35%;">
         <button class="close-button" (click)="cerrarModal()">x</button>
-        <h2 class="text-center mb-4">Agregar proveedor</h2>
+        <h2 class="text-center mb-4">{{ modoEdicion ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h2>
         <form [formGroup]="provedorForm" (ngSubmit)="guardarProvedores()">
           <div class="modal-body">
 

@@ -27,4 +27,8 @@ export class TemporaryCartController {
     async deleteCart(@Param('id') id: number) {
     return await this.temporaryCartService.deleteCartId(id);
   }
+  @Delete('vaciar/:userId')
+  async deleteAllCart(@Param('userId') id: number) {
+    return await this.temporaryCartService.deleteAllCartByUser(id);
+  }
 }

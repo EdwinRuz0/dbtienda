@@ -46,14 +46,22 @@
 
           <!-- CATEGORÍAS O MENSAJE -->
           <div *ngIf="categorias.length > 0; else noCategorias" class="cards-container">
-            <div class="card" *ngFor="let categoria of categorias">
+            <div class="card" *ngFor="let categoria of categorias" [ngStyle]="{ height: esAdmin ? '390px' : '350px' }">
               <img [src]="categoria.imagenBase64 || '../../../assets/default-category.jpg'" alt="{{categoria.NombreCategoria}}">
               <div class="card-body">
                 <h5 class="card-title">{{categoria.NombreCategoria}}</h5>
                 <div class="card-text-wrapper">
                   <p class="card-text">{{categoria.Descripcion}}</p>
                 </div>
-                <button class="btn btn-primary" (click)="explorarCategoria(categoria.id)">Explorar</button>
+                <ng-container *ngIf="esAdmin; else soloExplorar">
+                  <button class="btn btn-warning" (click)="abrirModal(categoria)">Editar</button>
+                  <button class="btn btn-danger" (click)="eliminarCategoria(categoria)">Eliminar</button>
+                </ng-container>
+                
+                <ng-template #soloExplorar>
+                  <button class="btn btn-primary" (click)="explorarCategoria(categoria.id)">Explorar</button>
+                </ng-template>
+                
               </div>
             </div>            
           </div>
@@ -75,7 +83,7 @@
     <div class="modal" [class.show]="modalAbierto">
       <div class="modal-content" style="width: 35%;">
         <button class="close-button" (click)="cerrarModal()">x</button>
-        <h2 class="text-center mb-4">Agregar Categoría</h2>
+        <h2 class="text-center mb-4">{{ modoEdicion ? 'Editar Categoría' : 'Agregar Categoría' }}</h2>
         <form [formGroup]="categoriaForm" (ngSubmit)="guardarCategoria()">
           <div class="modal-body">
 

@@ -36,27 +36,39 @@ export interface Proveedores{
     ImagenID: number;
     imagenBase64?: string;
 }
-export class Encuesta {
-    id!: number;
-    titulo!: string;
-    descripcion!: string;    
-    imagen!: string;
-    static titulo: any;
-}
 export interface Login{
     UserName: string;
     Password: string;
 }
-export interface encuestas{
-    imagen:string;
-    titulo:string;
-    categoria:string;
-    descripcion:string;
+export interface Compras {//compras a los proveedores
+    CompraID: number;
+    FechaCompra: Date;
+    ProveedorID: number;
+    TotalCompra: number;
 }
-interface Fotos {
-    name: string;
-    extension: string;
-    data: string;
+export interface DetalleCompras{//compras a los proveedores
+    DetalleCompraID: number;
+    CompraID: number;
+    ProductoID: number;
+    CantidadComprada: number;
+    PrecioUnitario: number;
+    Subtotal: number;
+    FechaDetalle: Date;
+}
+export interface Ventas {//compras de los usuarios
+    VentaID: number;
+    FechaVenta: Date;
+    UsuarioID: number;
+    TotalVenta: number;
+}
+export interface DetalleVentas {//compras de los usuarios
+    DetalleVentaID: number;
+    VentaID: number;
+    ProductoID: number;
+    CantidadVendida: number;
+    PrecioUnitario: number;
+    Subtotal: number;
+    FechaDetalle: Date;
 }
 export interface PerfilImagen{
     name:string;
@@ -78,4 +90,9 @@ export interface CarritoConDetalles extends CarritoTemporal {
     ImagenBase64: string;
     Subtotal: number;
 }
+export interface HistorialItem {
+    producto: Productos;
+    detalle: DetalleVentas;
+    fechaVenta: Date;
+  }
   

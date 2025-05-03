@@ -1,7 +1,7 @@
 //salesDetails.model.ts
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity('DetallesVenta')
 export class DetallesVenta {
   @PrimaryGeneratedColumn()
   DetalleVentaID: number;
@@ -15,4 +15,6 @@ export class DetallesVenta {
   PrecioUnitario: number;
   @Column()
   Subtotal: number;
+  @Column()
+  FechaDetalle: Date;
 }

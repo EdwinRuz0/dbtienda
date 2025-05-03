@@ -18,6 +18,9 @@ export class DetailsSalesService {
         }
         return detailsDoc;
     }
+    async getDetailsSalesDataByVentaId(id: number): Promise<DetallesVenta[]> {
+            return await this.detallesVentasRepository.find({ where: { VentaID: id } });
+          }
     async deleteDetailsSalesId(id: number): Promise<void> {
         const details = await this.detallesVentasRepository.findOneBy({DetalleVentaID: id});
         if (!details) {
@@ -27,23 +30,18 @@ export class DetailsSalesService {
     }
 
     async createNewDetailsSales(newDetails: DetallesVenta): Promise<DetallesVenta> {
-      const lastDetailsId = await this.detallesVentasRepository
-        .createQueryBuilder('detallesVenta')
-        .select('MAX(detallesVenta.DetalleVentaID)', 'maxId')
-        .getRawOne();
-      const newDetailsId = lastDetailsId.maxId ? lastDetailsId.maxId + 1 : 1;
-      newDetails.DetalleVentaID =  newDetailsId;
       const details = this.detallesVentasRepository.create({
-        DetalleVentaID: newDetails.DetalleVentaID,
         VentaID: newDetails.VentaID,
         ProductoID: newDetails.ProductoID,
         CantidadVendida: newDetails.CantidadVendida,
         PrecioUnitario: newDetails.PrecioUnitario,
-        Subtotal: newDetails.Subtotal
+        Subtotal: newDetails.Subtotal,
+        FechaDetalle: newDetails.FechaDetalle,
       });
       await this.detallesVentasRepository.save(details);
       return details;
     }
+    
     async updateDetailsSalesData(id: number, updatedDetailsSales: Partial<DetallesVenta>): Promise<DetallesVenta> {
       const details = await this.detallesVentasRepository.findOneBy({DetalleVentaID: id});
       if (!details) {
@@ -63,6 +61,9 @@ export class DetailsSalesService {
       }
       if (updatedDetailsSales.Subtotal) {
         details.Subtotal = updatedDetailsSales.Subtotal;
+      }
+      if (updatedDetailsSales.FechaDetalle) {
+        details.FechaDetalle = updatedDetailsSales.FechaDetalle;
       }
       await this.detallesVentasRepository.save(details);
       return details;

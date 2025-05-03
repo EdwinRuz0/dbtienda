@@ -8,7 +8,7 @@ export class Ventas {
   @Column()
   FechaVenta: Date;
   @Column()
-  ClienteID: number;
+  UsuarioID: number;
   @Column()
   TotalVenta: number;
 }

@@ -16,6 +16,7 @@ export class ProveedorComponent implements OnInit {
   provedores: Proveedores[] = [];
   todosLosProveedores: Proveedores[] = []; // ← COPIA ORIGINAL PARA FILTRAR
   rolUsuario: string = '';
+  esAdmin: boolean = false;
   provedorForm!: FormGroup;
   imagenProveedorBase64: string = '';
   nombreImagen: string = '';
@@ -29,6 +30,8 @@ export class ProveedorComponent implements OnInit {
   ];
   filtroSeleccionado: string = ''; 
   textoBusqueda: string = '';
+  proveedorEditando: Proveedores | null = null;
+  modoEdicion: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +42,7 @@ export class ProveedorComponent implements OnInit {
 
   ngOnInit(): void {
     this.rolUsuario = localStorage.getItem('userRole') || '';
+    this.esAdmin = this.rolUsuario === 'administrador';
     this.provedorForm = this.fb.group({
       NombreProveedor: ['', Validators.required],
       ContactoProveedor: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
@@ -136,9 +140,28 @@ export class ProveedorComponent implements OnInit {
     this.router.navigate(['/productsAll'], { queryParams: { proveedorId } });
   }
   
-  abrirModal() {
-    if (this.rolUsuario !== 'administrador') return;
+  abrirModal(proveedor?: Proveedores) {
+    if (!this.esAdmin) return;
     this.modalAbierto = true;
+    this.modoEdicion = !!proveedor;
+  
+    if (proveedor) {
+      this.proveedorEditando = proveedor;
+      this.provedorForm.patchValue({
+        NombreProveedor: proveedor.NombreProveedor,
+        ContactoProveedor: proveedor.ContactoProveedor,
+        DireccionProveedor: proveedor.DireccionProveedor
+      });
+      this.imagenProveedorBase64 = proveedor.imagenBase64 || '';
+      this.proveedorImageId = proveedor.ImagenID;
+    } else {
+      this.proveedorEditando = null;
+      this.provedorForm.reset();
+      this.imagenProveedorBase64 = '';
+      this.nombreImagen = '';
+      this.extensionImagen = '';
+      this.proveedorImageId = null;
+    }
   }
 
   cerrarModal() {
@@ -198,51 +221,108 @@ export class ProveedorComponent implements OnInit {
       });
       return;
     }
-    if (this.provedorForm.valid) {
-      if (this.imagenProveedorBase64 && this.nombreImagen && this.extensionImagen) {
-        const imagenData = {
-          NombreImagen: this.nombreImagen,
-          Extension: this.extensionImagen,
-          DataBase64: this.imagenProveedorBase64,
-          Referencia: 'proveedor'
-        };
-        const response = await this.proveedorService.enviarDatosImagen(imagenData).toPromise();
-        this.proveedorImageId = response.ImagenID;
-      }
-      const nuevoProveedorData = {
-        NombreProveedor: this.provedorForm.value.NombreProveedor || null,
-        ContactoProveedor: this.provedorForm.value.ContactoProveedor || null,
-        DireccionProveedor: this.provedorForm.value.DireccionProveedor || null,
-        ImagenID: this.proveedorImageId || null
-      };
-      this.proveedorService.agregarProveedores(nuevoProveedorData).subscribe(
-        () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Proveedor guardada',
-            text: 'Se agregó el proveedor exitosamente.',
-            confirmButtonColor: '#28a745'
-          });
-          this.obtenerProveedores();
-          this.cerrarModal();
-        },
-        (error) => {
-          console.error('Error al guardar el proveedor', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo guardar la proveedor.',
-            confirmButtonColor: '#e74c3c'
-          });
-        }
-      );
-    }else{
+
+    if (!this.provedorForm.valid) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'Por favor, complete todos los campos.',
         confirmButtonColor: '#e74c3c'
       });
+      return;
     }
+
+    if (this.imagenProveedorBase64 && this.nombreImagen && this.extensionImagen) {
+      const imagenData = {
+        NombreImagen: this.nombreImagen,
+        Extension: this.extensionImagen,
+        DataBase64: this.imagenProveedorBase64,
+        Referencia: 'proveedor'
+      };
+      const response = await this.proveedorService.enviarDatosImagen(imagenData).toPromise();
+      this.proveedorImageId = response.ImagenID;
+    }
+
+    const data = {
+      NombreProveedor: this.provedorForm.value.NombreProveedor,
+      ContactoProveedor: this.provedorForm.value.ContactoProveedor,
+      DireccionProveedor: this.provedorForm.value.DireccionProveedor,
+      ImagenID: this.proveedorImageId
+    };
+
+    if (this.modoEdicion && this.proveedorEditando) {
+      // Actualizar proveedor
+      this.proveedorService.actualizarProveedores(this.proveedorEditando.ProveedorID, data).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Proveedor actualizado',
+          text: 'El proveedor fue actualizado exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerProveedores();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al actualizar proveedor', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar el proveedor.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    } else {
+      // Agregar nuevo proveedor
+      this.proveedorService.agregarProveedores(data).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Proveedor guardado',
+          text: 'Se agregó el proveedor exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerProveedores();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al guardar proveedor', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo guardar el proveedor.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    }
+  }
+  eliminarProveedor(proveedor: Proveedores) {
+    if (!this.esAdmin) return;
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres eliminar al proveedor ${proveedor.NombreProveedor}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3498db',
+      cancelButtonColor: '#e74c3c',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.proveedorService.eliminarProveedores(proveedor.ProveedorID).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Proveedor eliminado',
+            text: `El proveedor ${proveedor.NombreProveedor} fue eliminado exitosamente.`,
+            confirmButtonColor: '#28a745'
+          });
+          this.obtenerProveedores();
+        }, error => {
+          console.error('Error al eliminar proveedor', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo eliminar el proveedor.',
+            confirmButtonColor: '#e74c3c'
+          });
+        });
+      }
+    });
   }
 }

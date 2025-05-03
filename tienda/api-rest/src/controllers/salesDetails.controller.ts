@@ -15,6 +15,10 @@ constructor(private readonly detallesVentasService: DetailsSalesService) {}
     const sales = await this.detallesVentasService.getDetailsSalesDataId(id);
     return sales;
   }
+  @Get('/api/detallesVenta/venta/:id')
+  async getDetailsSalesDataByVentaId(@Param('id') id: number) { 
+    return await this.detallesVentasService.getDetailsSalesDataByVentaId(id);
+  }
   @Delete('/api/detallesVenta/:id') //borrar las detalles de ventas con el id
   async deleteDetaisSalesId(@Param('id') id: number) {
     await this.detallesVentasService.deleteDetailsSalesId(id);

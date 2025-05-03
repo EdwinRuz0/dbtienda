@@ -26,6 +26,12 @@ export class ProductosService {
   getProductosProv(id2: any): Observable<Productos[]> {
     return this.http.get<Productos[]>(this.apiUrl4 + id2);
   }
+  actualizarProductos(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiProductos}/${id}`, datos);
+  }
+  eliminarProductos(id: number): Observable<any> {
+    return this.http.delete(`${this.apiProductos}/${id}`);
+  }
 
   enviarDatosImagen(datos: any): Observable<any> {
     return this.http.post(this.apiImagenes, datos);

@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   categorias: Categoria[] = [];
   todosLasCategorias: Categoria[] = []; // ← COPIA ORIGINAL PARA FILTRAR
   rolUsuario: string = '';
+  esAdmin: boolean = false;
   imagenCategoriaBase64: string = '';
   nombreImagen: string = '';
   extensionImagen: string = '';
@@ -28,7 +29,9 @@ export class HomeComponent implements OnInit {
   ];
   filtroSeleccionado: string = ''; 
   textoBusqueda: string = '';
-
+  categoriaEditando: Categoria | null = null;
+  modoEdicion: boolean = false;
+  
   constructor(
     private fb: FormBuilder,
     private homeService: HomeService,
@@ -38,6 +41,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.rolUsuario = localStorage.getItem('userRole') || '';
+    this.esAdmin = this.rolUsuario === 'administrador';
     this.categoriaForm = this.fb.group({
       NombreCategoria: ['', Validators.required],
       Descripcion: ['', Validators.required]
@@ -129,10 +133,29 @@ export class HomeComponent implements OnInit {
   }
   
 
-  abrirModal() {
-    if (this.rolUsuario !== 'administrador') return;
+  abrirModal(categoria?: Categoria) {
+    if (!this.esAdmin) return;
     this.modalAbierto = true;
+    this.modoEdicion = !!categoria;
+  
+    if (categoria) {
+      this.categoriaEditando = categoria;
+      this.categoriaForm.patchValue({
+        NombreCategoria: categoria.NombreCategoria,
+        Descripcion: categoria.Descripcion
+      });
+      this.imagenCategoriaBase64 = categoria.imagenBase64 || '';
+      this.categoriaImageId = categoria.ImagenID;
+    } else {
+      this.categoriaEditando = null;
+      this.categoriaForm.reset();
+      this.imagenCategoriaBase64 = '';
+      this.nombreImagen = '';
+      this.extensionImagen = '';
+      this.categoriaImageId = null;
+    }
   }
+  
 
   cerrarModal() {
     this.modalAbierto = false;
@@ -186,50 +209,107 @@ export class HomeComponent implements OnInit {
       });
       return;
     }
-    if (this.categoriaForm.valid) {
-      if (this.imagenCategoriaBase64 && this.nombreImagen && this.extensionImagen) {
-        const imagenData = {
-          NombreImagen: this.nombreImagen,
-          Extension: this.extensionImagen,
-          DataBase64: this.imagenCategoriaBase64,
-          Referencia: 'categoria'
-        };
-        const response = await this.homeService.enviarDatosImagen(imagenData).toPromise();
-        this.categoriaImageId = response.ImagenID;
-      }
-      const nuevaCategoriaData = {
-        NombreCategoria: this.categoriaForm.value.NombreCategoria || null,
-        Descripcion: this.categoriaForm.value.Descripcion || null,
-        ImagenID: this.categoriaImageId || null
-      };
-      this.homeService.agregarCategorias(nuevaCategoriaData).subscribe(
-        () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Categoría guardada',
-            text: 'Se agregó la categoría exitosamente.',
-            confirmButtonColor: '#28a745'
-          });
-          this.obtenerCategorias();
-          this.cerrarModal();
-        },
-        (error) => {
-          console.error('Error al guardar categoría', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo guardar la categoría.',
-            confirmButtonColor: '#e74c3c'
-          });
-        }
-      );
-    }else{
+
+    if (!this.categoriaForm.valid) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'Por favor, complete todos los campos.',
         confirmButtonColor: '#e74c3c'
       });
+      return;
     }
+
+    if (this.imagenCategoriaBase64 && this.nombreImagen && this.extensionImagen) {
+      const imagenData = {
+        NombreImagen: this.nombreImagen,
+        Extension: this.extensionImagen,
+        DataBase64: this.imagenCategoriaBase64,
+        Referencia: 'categoria'
+      };
+      const response = await this.homeService.enviarDatosImagen(imagenData).toPromise();
+      this.categoriaImageId = response.ImagenID;
+    }
+
+    const data = {
+      NombreCategoria: this.categoriaForm.value.NombreCategoria,
+      Descripcion: this.categoriaForm.value.Descripcion,
+      ImagenID: this.categoriaImageId
+    };
+
+    if (this.modoEdicion && this.categoriaEditando) {
+      // Lógica para actualizar
+      this.homeService.actualizarCategorias(this.categoriaEditando.id, data).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría actualizada',
+          text: 'La categoría fue actualizada exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerCategorias();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al actualizar categoría', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar la categoría.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    } else {
+      // Lógica para agregar
+      this.homeService.agregarCategorias(data).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Categoría guardada',
+          text: 'Se agregó la categoría exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerCategorias();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al guardar categoría', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo guardar la categoría.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    }
+  }
+  eliminarCategoria(categoria: Categoria) {
+    if (!this.esAdmin) return;
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres eliminar la categoría "${categoria.NombreCategoria}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.homeService.eliminarCategorias(categoria.id).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Categoría eliminada',
+            text: 'La categoría fue eliminada exitosamente.',
+            confirmButtonColor: '#28a745'
+          });
+          this.obtenerCategorias();
+        }, error => {
+          console.error('Error al eliminar categoría', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo eliminar la categoría.',
+            confirmButtonColor: '#e74c3c'
+          });
+        });
+      }
+    });
   }
 }

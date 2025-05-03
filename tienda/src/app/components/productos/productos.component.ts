@@ -19,6 +19,7 @@ export class ProductosComponent implements OnInit {
   todosLosProductos: Productos[] = []; // ← COPIA ORIGINAL PARA FILTRAR
   rolUsuario: string = '';
   userId: number = 0;
+  esAdmin: boolean = false;
   productosForm!: FormGroup;
   imagenProductosBase64: string = '';
   nombreImagen: string = '';
@@ -40,6 +41,8 @@ export class ProductosComponent implements OnInit {
   ];
   filtroSeleccionado: string = ''; 
   textoBusqueda: string = '';
+  productoEditando: Productos | null = null;
+  modoEdicion: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -54,6 +57,7 @@ export class ProductosComponent implements OnInit {
   ngOnInit(): void {
     this.rolUsuario = localStorage.getItem('userRole') || '';
     this.userId = Number(localStorage.getItem('userId')) || 0;
+    this.esAdmin = this.rolUsuario === 'administrador';
     this.productosForm = this.fb.group({
       NombreProducto: ['', Validators.required],
       Descripcion: ['', Validators.required],
@@ -221,11 +225,33 @@ export class ProductosComponent implements OnInit {
     });
   }
   
-  abrirModal() {
-    if (this.rolUsuario !== 'administrador') return;
+  abrirModal(producto?: Productos) {
+    if (!this.esAdmin) return;
+    
+    this.modoEdicion = !!producto;
     this.modalAbierto = true;
+
+    if (producto) {
+      this.productoEditando = producto;
+      this.productosForm.patchValue({
+        NombreProducto: producto.NombreProducto,
+        Descripcion: producto.Descripcion,
+        Precio: producto.Precio,
+        CantidadEnStock: producto.CantidadEnStock,
+        CategoriaID: producto.CategoriaID,
+        ProveedorID: producto.ProveedorID,
+      });
+      this.imagenProductosBase64 = producto.imagenBase64 || '';
+      this.productoImageId = producto.ImagenID;
+    } else {
+      this.productoEditando = null;
+      this.productosForm.reset();
+      this.imagenProductosBase64 = '';
+      this.nombreImagen = '';
+      this.extensionImagen = '';
+      this.productoImageId = null;
+    }
   }
-  
 
   cerrarModal() {
     this.modalAbierto = false;
@@ -284,54 +310,106 @@ export class ProductosComponent implements OnInit {
       });
       return;
     }
-    if (this.productosForm.valid) {
-      if (this.imagenProductosBase64 && this.nombreImagen && this.extensionImagen) {
-        const imagenData = {
-          NombreImagen: this.nombreImagen,
-          Extension: this.extensionImagen,
-          DataBase64: this.imagenProductosBase64,
-          Referencia: 'producto'
-        };
-        const response = await this.productosService.enviarDatosImagen(imagenData).toPromise();
-        this.productoImageId = response.ImagenID;
-      }
-      const nuevoProductoData = {
-        NombreProducto: this.productosForm.value.NombreProducto || null,
-        Descripcion: this.productosForm.value.Descripcion || null,
-        Precio: this.productosForm.value.Precio || null,
-        CantidadEnStock: this.productosForm.value.CantidadEnStock || null,
-        CategoriaID: this.productosForm.value.CategoriaID || null,
-        ProveedorID: this.productosForm.value.ProveedorID || null,
-        ImagenID: this.productoImageId || null
-      };
-      this.productosService.agregarProductos(nuevoProductoData).subscribe(
-        () => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Producto guardado',
-            text: 'Se agregó el producto exitosamente.',
-            confirmButtonColor: '#28a745'
-          });
-          this.obtenerProductos();
-          this.cerrarModal();
-        },
-        (error) => {
-          console.error('Error al guardar producto', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No se pudo guardar el producto.',
-            confirmButtonColor: '#e74c3c'
-          });
-        }
-      );
-    }else{
+    if (!this.productosForm.valid) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Por favor, complete todos los campos.',
+        text: 'Por favor, completa todos los campos.',
         confirmButtonColor: '#e74c3c'
       });
+      return;
     }
+    if (this.imagenProductosBase64 && this.nombreImagen && this.extensionImagen) {
+      const imagenData = {
+        NombreImagen: this.nombreImagen,
+        Extension: this.extensionImagen,
+        DataBase64: this.imagenProductosBase64,
+        Referencia: 'producto'
+      };
+      const response = await this.productosService.enviarDatosImagen(imagenData).toPromise();
+      this.productoImageId = response.ImagenID;
+    }    
+    const productoData = {
+      NombreProducto: this.productosForm.value.NombreProducto,
+      Descripcion: this.productosForm.value.Descripcion,
+      Precio: this.productosForm.value.Precio,
+      CantidadEnStock: this.productosForm.value.CantidadEnStock,
+      CategoriaID: this.productosForm.value.CategoriaID,
+      ProveedorID: this.productosForm.value.ProveedorID,
+      ImagenID: this.productoImageId
+    };    
+    if (this.modoEdicion && this.productoEditando) {
+      // Lógica para editar
+      this.productosService.actualizarProductos(this.productoEditando.ProductoID, productoData).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto actualizado',
+          text: 'El producto fue actualizado exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerProductos();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al actualizar producto', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo actualizar el producto.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    } else {
+      // Agregar producto
+      this.productosService.agregarProductos(productoData).subscribe(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Producto guardado',
+          text: 'Se agregó el producto exitosamente.',
+          confirmButtonColor: '#28a745'
+        });
+        this.obtenerProductos();
+        this.cerrarModal();
+      }, error => {
+        console.error('Error al guardar producto', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudo guardar el producto.',
+          confirmButtonColor: '#e74c3c'
+        });
+      });
+    }
+  }    
+  eliminarProducto(producto: Productos) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres eliminar el producto "${producto.NombreProducto}"?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.productosService.eliminarProductos(producto.ProductoID).subscribe(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Producto eliminado',
+            text: 'El producto fue eliminado exitosamente.',
+            confirmButtonColor: '#28a745'
+          });
+          this.obtenerProductos();
+        }, error => {
+          console.error('Error al eliminar producto', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo eliminar el producto.',
+            confirmButtonColor: '#e74c3c'
+          });
+        });
+      }
+    });
   }
 }

@@ -5,6 +5,7 @@
     <ul>
       <li><a routerLink="/productsAll">Todos Los Productos</a></li>
       <li><a routerLink="/proveedores">Proveedores</a></li>
+      <li> <a routerLink="/historial">{{ esAdmin ? 'Historial Ventas' : 'Historial Compras' }}</a></li>
 
       <li class="user-menu" (click)="toggleMenu()">
         <div class="user-info">
@@ -15,7 +16,7 @@
 
         <ul class="dropdown" *ngIf="menuAbierto">
           <li><a routerLink="/perfil">Perfil</a></li>
-          <li><a routerLink="/carrito">Carrito</a></li>
+          <li *ngIf="!esAdmin"><a routerLink="/carrito">Carrito</a></li>
           <li><a routerLink="/contacto">Contacto</a></li>
           <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
         </ul>

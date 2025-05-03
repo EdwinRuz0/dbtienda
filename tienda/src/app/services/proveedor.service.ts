@@ -18,6 +18,12 @@ export class ProveedorService {
   agregarProveedores(datos: any): Observable<any> {
     return this.http.post(this.apiProveedor, datos);
   }
+  actualizarProveedores(id: number, datos: any): Observable<any> {
+    return this.http.put(`${this.apiProveedor}/${id}`, datos);
+  }
+  eliminarProveedores(id: number): Observable<any> {
+    return this.http.delete(`${this.apiProveedor}/${id}`);
+  }
 
   enviarDatosImagen(datos: any): Observable<any> {
     return this.http.post(this.apiImagenes, datos);

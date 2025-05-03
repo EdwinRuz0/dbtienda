@@ -1,0 +1,88 @@
+<div class="historial-container">
+    <div class="historial-productos">
+      <h2>Mi Historial De Compras</h2>
+      <div style="display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-bottom: 10px;">
+        <div class="filtro-wrapper">
+          <button class="btn btn-filtro" (click)="toggleFiltros()">
+            <span class="contenido-filtro">
+              <img src="../../../assets/filtro-icon.png" class="icono-filtro" alt="icono filtro">
+              <span>{{ filtroSeleccionado || 'FILTROS' }}</span>
+            </span>
+          </button>
+      
+          <!-- Dropdown de filtros -->
+          <div class="dropdown-filtros-grid" *ngIf="mostrarFiltros">
+            <div class="filtro-opcion" *ngFor="let filtro of filtrosDisponibles" (click)="seleccionarFiltro(filtro)">
+              {{ filtro }}
+            </div>
+          </div>
+        </div>
+      
+        <!-- Dropdown de fecha -->
+        <div class="barra-busqueda" *ngIf="filtroSeleccionado === 'Fecha'" style="margin: 0;">
+          <select class="filtro-select" [(ngModel)]="opcionFechaSeleccionada" (change)="filtrarPorFechaSeleccionada()">
+            <option *ngFor="let opcion of opcionesDropdown" [value]="opcion">{{ opcion }}</option>
+          </select>
+          <button class="btn-icono" (click)="cerrarBusqueda()">
+            <img src="../../../assets/filtro-icon.png" alt="Cerrar">
+          </button>
+        </div>
+      </div>
+      
+      
+
+      <hr />
+      <div *ngIf="historialAgrupado.length > 0; else sinCompras">
+        <table class="tabla-compra">
+          <thead>
+            <tr>
+                <th>Fecha</th>
+                <th></th> 
+                <th>Producto</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let grupo of historialAgrupado">
+                <ng-container *ngFor="let item of grupo.detalles; let i = index">
+                <tr>
+                    <td *ngIf="i === 0" [attr.rowspan]="grupo.detalles.length" class="centrado">
+                    {{ grupo.venta.FechaVenta | date:'short' }}
+                    </td>
+
+                    <!-- Imagen del producto -->
+                    <td class="centrado">
+                    <img *ngIf="item.producto.imagenBase64" [src]="item.producto.imagenBase64" alt="Producto" class="imagen-producto">
+                    </td>
+
+                    <td>
+                    <strong>{{ item.producto.NombreProducto }}</strong><br />
+                    <span class="precio-unitario">${{ item.detalle.PrecioUnitario }}</span>
+                    </td>
+
+                    <td>
+                    <div class="descripcion-scroll">{{ item.producto.Descripcion }}</div>
+                    </td>
+
+                    <td class="centrado">{{ item.detalle.CantidadVendida }}</td>
+                    <td class="centrado">${{ item.detalle.Subtotal }}</td>
+
+                    <td *ngIf="i === 0" [attr.rowspan]="grupo.detalles.length" class="centrado">
+                    ${{ grupo.venta.TotalVenta }}
+                    </td>
+                </tr>
+                </ng-container>
+            </ng-container>
+            </tbody>
+        </table>
+      </div>
+  
+      <ng-template #sinCompras>
+        <p class="mensaje-vacio">{{ esAdmin ? 'No hay ventas realizadas.' : 'No hay compras realizadas.' }}</p>
+      </ng-template>
+    </div>
+  </div>
+  

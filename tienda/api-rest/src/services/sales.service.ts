@@ -19,6 +19,9 @@ export class SalesService {
         }
         return salesDoc;
     }
+    async getSalesDataByUserId(id: number): Promise<Ventas[]> {
+        return await this.ventasRepository.find({ where: { UsuarioID: id } });
+      }
     async deleteSalesId(id: number): Promise<void> {
         const sales = await this.ventasRepository.findOneBy({VentaID: id});
         if (!sales) {
@@ -37,9 +40,10 @@ export class SalesService {
       const sales = this.ventasRepository.create({
         VentaID: newSales.VentaID,
         FechaVenta: newSales.FechaVenta,
-        ClienteID: newSales.ClienteID,
+        UsuarioID: newSales.UsuarioID,
         TotalVenta: newSales.TotalVenta
       });
+      
       await this.ventasRepository.save(sales);
       return sales;
     }
@@ -51,8 +55,8 @@ export class SalesService {
       if (updatedSales.FechaVenta) {
         sales.FechaVenta = updatedSales.FechaVenta;
       }
-      if (updatedSales.ClienteID) {
-        sales.ClienteID = updatedSales.ClienteID;
+      if (updatedSales.UsuarioID) {
+        sales.UsuarioID = updatedSales.UsuarioID;
       }
       if (updatedSales.TotalVenta) {
         sales.TotalVenta = updatedSales.TotalVenta;

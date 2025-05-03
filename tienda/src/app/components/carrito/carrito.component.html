@@ -34,7 +34,7 @@
 
     <hr />
     <div class="acciones">
-      <a href="#">🏷️ Ingresar código promocional</a> <!-- PARA EL FINAL(OPCIONAL), TENGO QUE CREAR EL COMPONENTE PARA ADMIN Y USER Y LA LOGICA -->
+      <a href="#" (click)="$event.preventDefault()">🏷️ Ingresar código promocional</a> <!-- PARA EL FINAL(OPCIONAL), TENGO QUE CREAR EL COMPONENTE PARA ADMIN Y USER Y LA LOGICA -->
     </div>
   </div>
 
@@ -67,7 +67,7 @@
 
           <form [formGroup]="formPago" (ngSubmit)="finalizarCompra()" class="form-pago">
             <label for="tarjeta">Número de tarjeta</label>
-            <input id="tarjeta" type="text" formControlName="tarjeta" placeholder="•••• •••• •••• ••••" />
+            <input id="tarjeta" type="text" formControlName="tarjeta" placeholder="•••• •••• •••• ••••" maxlength="19" (input)="formatearNumTarjeta()" />
 
             <label for="titular">Nombre y apellido</label>
             <input id="titular" type="text" formControlName="titular" placeholder="Como figura en la tarjeta" />
@@ -75,11 +75,17 @@
             <div class="fila">
               <div class="columna">
                 <label for="fecha">Fecha de vencimiento</label>
-                <input id="fecha" type="text" formControlName="fecha" placeholder="MM/AA" />
-              </div>
+                <input id="fecha" type="text" formControlName="fecha" placeholder="MM/AA" maxlength="5" (input)="formatearFecha()" />
+                <div *ngIf="formPago.get('fecha')?.hasError('mesInvalido')">
+                  <small class="text-danger">Mes inválido</small>
+                </div>
+                <div *ngIf="formPago.get('fecha')?.hasError('fechaPasada')">
+                  <small class="text-danger">La tarjeta ya venció</small>
+                </div>
+              </div>              
               <div class="columna">
                 <label for="cvv">Código de seguridad</label>
-                <input id="cvv" type="text" formControlName="cvv" placeholder="CVV" />
+                <input id="cvv" type="text" formControlName="cvv" placeholder="CVV" maxlength="3" (input)="formatearCVV()"/>
               </div>
             </div>
           </form>

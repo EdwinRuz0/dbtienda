@@ -13,6 +13,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CarritoComponent } from './components/carrito/carrito.component';
+import { HistorialComponent } from './components/historial/historial.component';
+import { ContactoComponent } from './components/contacto/contacto.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { CarritoComponent } from './components/carrito/carrito.component';
     RegisterComponent,
     PerfilComponent,
     NavbarComponent,
-    CarritoComponent
+    CarritoComponent,
+    HistorialComponent,
+    ContactoComponent
   ],
   imports: [
     BrowserModule,

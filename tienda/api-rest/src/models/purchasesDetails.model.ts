@@ -15,4 +15,6 @@ export class DetallesCompra {
   PrecioUnitario: number;
   @Column()
   Subtotal: number;
+  @Column()
+  FechaDetalle: Date;
 }
